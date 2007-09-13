@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor.Document;
 
 namespace QueryTool2
 {
@@ -20,6 +21,13 @@ namespace QueryTool2
             treeView1.Dock = DockStyle.Fill;
             propertyGrid1.Dock = DockStyle.Fill;
             resultsTabControl.Dock = DockStyle.Fill;
+            textEditorControl1.Dock = DockStyle.Fill;
+
+            string appPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            HighlightingManager.Manager.AddSyntaxModeFileProvider(new FileSyntaxModeProvider(appPath));
+
+            textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("LOGPARSER");
+            textEditorControl1.ShowEOLMarkers = false;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
