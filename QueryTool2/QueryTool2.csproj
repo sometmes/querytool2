@@ -37,8 +37,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeProviderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeProviderForm.Designer.cs">
+      <DependentUpon>ChangeProviderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConnectionStringBuilderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConnectionStringBuilderForm.Designer.cs">
+      <DependentUpon>ConnectionStringBuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewConnectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewConnectionForm.Designer.cs">
+      <DependentUpon>NewConnectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChangeProviderForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChangeProviderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionStringBuilderForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConnectionStringBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewConnectionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NewConnectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -81,6 +111,9 @@
     <Content Include="SyntaxModes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PlugIns\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -35,11 +35,11 @@ namespace QueryTool2
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.textEditorControl1 = new ICSharpCode.TextEditor.TextEditorControl();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.resultsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +56,12 @@ namespace QueryTool2
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textEditorControl1 = new ICSharpCode.TextEditor.TextEditorControl();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewConnectionPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -174,6 +179,21 @@ namespace QueryTool2
             this.splitContainer3.SplitterDistance = 357;
             this.splitContainer3.TabIndex = 0;
             // 
+            // textEditorControl1
+            // 
+            this.textEditorControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textEditorControl1.IsIconBarVisible = false;
+            this.textEditorControl1.Location = new System.Drawing.Point(22, 19);
+            this.textEditorControl1.Name = "textEditorControl1";
+            this.textEditorControl1.ShowEOLMarkers = true;
+            this.textEditorControl1.ShowLineNumbers = false;
+            this.textEditorControl1.ShowSpaces = true;
+            this.textEditorControl1.ShowTabs = true;
+            this.textEditorControl1.ShowVRuler = true;
+            this.textEditorControl1.Size = new System.Drawing.Size(280, 176);
+            this.textEditorControl1.TabIndent = 2;
+            this.textEditorControl1.TabIndex = 0;
+            // 
             // propertyGrid1
             // 
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -212,20 +232,13 @@ namespace QueryTool2
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Location = new System.Drawing.Point(3, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(111, 25);
-            this.toolStrip1.TabIndex = 0;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.connectionToolStripMenuItem,
             this.databaseToolStripMenuItem,
             this.dataCommandToolStripMenuItem,
             this.windowToolStripMenuItem});
@@ -246,7 +259,7 @@ namespace QueryTool2
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -262,13 +275,13 @@ namespace QueryTool2
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem.Text = "&Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             // 
             // databaseToolStripMenuItem
@@ -350,19 +363,49 @@ namespace QueryTool2
             this.closeToolStripMenuItem.Text = "&Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // textEditorControl1
+            // toolStrip1
             // 
-            this.textEditorControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textEditorControl1.IsIconBarVisible = false;
-            this.textEditorControl1.Location = new System.Drawing.Point(22, 19);
-            this.textEditorControl1.Name = "textEditorControl1";
-            this.textEditorControl1.ShowLineNumbers = false;
-            this.textEditorControl1.ShowSpaces = true;
-            this.textEditorControl1.ShowTabs = true;
-            this.textEditorControl1.ShowVRuler = true;
-            this.textEditorControl1.Size = new System.Drawing.Size(280, 176);
-            this.textEditorControl1.TabIndent = 2;
-            this.textEditorControl1.TabIndex = 0;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Location = new System.Drawing.Point(3, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(111, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // connectionToolStripMenuItem
+            // 
+            this.connectionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newConnectionToolStripMenuItem,
+            this.resetConnectionToolStripMenuItem,
+            this.closeConnectionToolStripMenuItem,
+            this.viewConnectionPropertiesToolStripMenuItem});
+            this.connectionToolStripMenuItem.Name = "connectionToolStripMenuItem";
+            this.connectionToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.connectionToolStripMenuItem.Text = "Connection";
+            // 
+            // newConnectionToolStripMenuItem
+            // 
+            this.newConnectionToolStripMenuItem.Name = "newConnectionToolStripMenuItem";
+            this.newConnectionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.newConnectionToolStripMenuItem.Text = "New Connection";
+            this.newConnectionToolStripMenuItem.Click += new System.EventHandler(this.newConnectionToolStripMenuItem_Click);
+            // 
+            // resetConnectionToolStripMenuItem
+            // 
+            this.resetConnectionToolStripMenuItem.Name = "resetConnectionToolStripMenuItem";
+            this.resetConnectionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.resetConnectionToolStripMenuItem.Text = "Reset Connection";
+            // 
+            // closeConnectionToolStripMenuItem
+            // 
+            this.closeConnectionToolStripMenuItem.Name = "closeConnectionToolStripMenuItem";
+            this.closeConnectionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.closeConnectionToolStripMenuItem.Text = "Close Connection";
+            // 
+            // viewConnectionPropertiesToolStripMenuItem
+            // 
+            this.viewConnectionPropertiesToolStripMenuItem.Name = "viewConnectionPropertiesToolStripMenuItem";
+            this.viewConnectionPropertiesToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.viewConnectionPropertiesToolStripMenuItem.Text = "View Connection properties";
             // 
             // QueryWindowForm
             // 
@@ -430,5 +473,10 @@ namespace QueryTool2
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private ICSharpCode.TextEditor.TextEditorControl textEditorControl1;
+        private System.Windows.Forms.ToolStripMenuItem connectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newConnectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetConnectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeConnectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewConnectionPropertiesToolStripMenuItem;
     }
 }

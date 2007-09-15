@@ -44,5 +44,11 @@ namespace QueryTool2
         {
             
         }
+
+        private void newConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewConnectionForm f = new NewConnectionForm();
+            f.ShowDialog();
+        }
     }
 }
