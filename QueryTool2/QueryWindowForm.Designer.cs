@@ -1,4 +1,4 @@
-namespace QueryTool2
+namespace App
 {
     partial class QueryWindowForm
     {

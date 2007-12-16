@@ -1,4 +1,4 @@
-namespace QueryTool2
+namespace App
 {
     partial class NewConnectionForm
     {
@@ -34,23 +34,13 @@ namespace QueryTool2
             this.provider1ComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.changeProvider1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.SimpleEditGroupBox = new System.Windows.Forms.GroupBox();
             this.testConnection = new System.Windows.Forms.Button();
             this.acceptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.advancedButton = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // provider2ComboBox
@@ -106,101 +96,14 @@ namespace QueryTool2
             this.changeProvider1.Text = "Change...";
             this.changeProvider1.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // SimpleEditGroupBox
             // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.comboBox2);
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(12, 112);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(323, 154);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Configure provider";
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(56, 79);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(256, 66);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "TODO: develop controls to edit connection properties for specific providers. Usin" +
-                "g plug-in architecture.";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(68, 55);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(110, 21);
-            this.comboBox2.TabIndex = 5;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(68, 26);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(110, 21);
-            this.comboBox1.TabIndex = 5;
-            this.comboBox1.Text = "serverAAA";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 58);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 13);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Database:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 29);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Server:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(246, 55);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(66, 20);
-            this.textBox2.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(246, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(66, 20);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "test004";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(184, 58);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Password:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(184, 29);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Login:";
+            this.SimpleEditGroupBox.Location = new System.Drawing.Point(12, 112);
+            this.SimpleEditGroupBox.Name = "SimpleEditGroupBox";
+            this.SimpleEditGroupBox.Size = new System.Drawing.Size(323, 154);
+            this.SimpleEditGroupBox.TabIndex = 3;
+            this.SimpleEditGroupBox.TabStop = false;
+            this.SimpleEditGroupBox.Text = "Configure provider";
             // 
             // testConnection
             // 
@@ -275,7 +178,7 @@ namespace QueryTool2
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.testConnection);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.SimpleEditGroupBox);
             this.Controls.Add(this.changeProvider1);
             this.Controls.Add(this.changeProvider2);
             this.Controls.Add(this.label2);
@@ -285,8 +188,6 @@ namespace QueryTool2
             this.Name = "NewConnectionForm";
             this.Text = "Connection properties";
             this.Load += new System.EventHandler(this.NewConnectionForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -300,20 +201,11 @@ namespace QueryTool2
         private System.Windows.Forms.ComboBox provider1ComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button changeProvider1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox SimpleEditGroupBox;
         private System.Windows.Forms.Button testConnection;
         private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button advancedButton;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label8;
     }

@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace QueryTool2
+namespace App
 {
     public partial class NewConnectionForm : Form
     {
@@ -21,6 +21,9 @@ namespace QueryTool2
 
         private void NewConnectionForm_Load(object sender, EventArgs e)
         {
+            SimpleConnectionUserControl.MsSqlServer edit = new App.SimpleConnectionUserControl.MsSqlServer();
+            edit.Location = new Point(6, 15);
+            SimpleEditGroupBox.Controls.Add(edit);
             testConnection.Enabled = false;
         }
 

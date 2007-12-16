@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace QueryTool2
+namespace App
 {
     public partial class ChangeProviderForm : Form
     {

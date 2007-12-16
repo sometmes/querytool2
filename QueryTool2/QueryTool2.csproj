@@ -7,7 +7,7 @@
     <ProjectGuid>{188520C7-E225-4BA3-991A-1392912B3B70}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QueryTool2</RootNamespace>
+    <RootNamespace>App</RootNamespace>
     <AssemblyName>QueryTool2</AssemblyName>
     <StartupObject>QueryTool2.Program</StartupObject>
   </PropertyGroup>
@@ -43,12 +43,14 @@
     <Compile Include="ChangeProviderForm.Designer.cs">
       <DependentUpon>ChangeProviderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\RecentConnection.cs" />
     <Compile Include="ConnectionStringBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConnectionStringBuilderForm.Designer.cs">
       <DependentUpon>ConnectionStringBuilderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lib\CryptoApi.cs" />
     <Compile Include="NewConnectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,16 +80,23 @@
       <SubType>Designer</SubType>
       <DependentUpon>QueryWindowForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SimpleConnectionUserControl\MsSqlServer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MsSqlServer.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Content Include="LogParser.xshd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>QueryTool2.Properties</CustomToolNamespace>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -99,6 +108,14 @@
     </Compile>
     <Compile Include="QueryWindowForm.Designer.cs">
       <DependentUpon>QueryWindowForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SimpleConnectionUserControl\ISimpleConnectionEdit.cs" />
+    <Compile Include="SimpleConnectionUserControl\MsSqlServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleConnectionUserControl\MsSqlServer.Designer.cs">
+      <DependentUpon>MsSqlServer.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

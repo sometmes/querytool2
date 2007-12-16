@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
 
-namespace QueryTool2
+namespace App
 {
     public partial class QueryWindowForm : Form
     {
