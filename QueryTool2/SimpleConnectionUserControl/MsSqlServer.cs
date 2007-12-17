@@ -37,5 +37,33 @@ namespace App.SimpleConnectionUserControl
             _cnBuilder.ConnectionString = _connectionInfo.ConnectionString;
             BindControls();
         }
+
+        private void MsSqlServer_Load(object sender, EventArgs e)
+        {
+            Server.Validated+=new EventHandler(Server_Validated);
+            Database.Validated += new EventHandler(Database_Validated);
+            Login.Validated += new EventHandler(Login_Validated);
+            Pwd.Validated += new EventHandler(Pwd_Validated);
+        }
+
+        void Pwd_Validated(object sender, EventArgs e)
+        {
+            _connectionInfo.Password = Pwd.Text;
+        }
+
+        void Login_Validated(object sender, EventArgs e)
+        {
+            _cnBuilder.UserID = Login.Text;
+        }
+
+        void Database_Validated(object sender, EventArgs e)
+        {
+            _cnBuilder.InitialCatalog = Database.Text;
+        }
+
+        private void Server_Validated(object sender, EventArgs e)
+        {
+            _cnBuilder.DataSource = Server.Text;
+        }
     }
 }

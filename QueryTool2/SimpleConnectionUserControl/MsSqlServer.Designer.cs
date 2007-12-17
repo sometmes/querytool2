@@ -77,6 +77,7 @@ namespace App.SimpleConnectionUserControl
             // 
             this.Pwd.Location = new System.Drawing.Point(65, 91);
             this.Pwd.Name = "Pwd";
+            this.Pwd.PasswordChar = '*';
             this.Pwd.Size = new System.Drawing.Size(110, 20);
             this.Pwd.TabIndex = 16;
             // 
@@ -121,6 +122,7 @@ namespace App.SimpleConnectionUserControl
             this.Controls.Add(this.label4);
             this.Name = "MsSqlServer";
             this.Size = new System.Drawing.Size(313, 135);
+            this.Load += new System.EventHandler(this.MsSqlServer_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

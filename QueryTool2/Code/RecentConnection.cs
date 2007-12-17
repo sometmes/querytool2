@@ -8,9 +8,11 @@ namespace App
     [Serializable]
     public class RecentConnection
     {
-        public DateTime Created;
+        private DateTime _created;
+        public DateTime Created { get { return _created; } set { _created = value; } }
         public DateTime LastUsed;
-        public string ConnectionString;
+        private string _connectionString;
+        public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
         public string Password;
     }
 
