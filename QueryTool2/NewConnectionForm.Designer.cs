@@ -28,10 +28,8 @@ namespace App
         /// </summary>
         private void InitializeComponent()
         {
-            this.provider2ComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.changeProvider2 = new System.Windows.Forms.Button();
-            this.provider1ComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.changeProvider1 = new System.Windows.Forms.Button();
             this.SimpleEditGroupBox = new System.Windows.Forms.GroupBox();
@@ -39,17 +37,9 @@ namespace App
             this.acceptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.advancedButton = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.provider2Textbox = new System.Windows.Forms.TextBox();
+            this.provider1Textbox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // provider2ComboBox
-            // 
-            this.provider2ComboBox.FormattingEnabled = true;
-            this.provider2ComboBox.Location = new System.Drawing.Point(12, 27);
-            this.provider2ComboBox.Name = "provider2ComboBox";
-            this.provider2ComboBox.Size = new System.Drawing.Size(242, 21);
-            this.provider2ComboBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -62,21 +52,14 @@ namespace App
             // 
             // changeProvider2
             // 
-            this.changeProvider2.Location = new System.Drawing.Point(260, 25);
+            this.changeProvider2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.changeProvider2.Location = new System.Drawing.Point(240, 25);
             this.changeProvider2.Name = "changeProvider2";
             this.changeProvider2.Size = new System.Drawing.Size(75, 23);
             this.changeProvider2.TabIndex = 2;
             this.changeProvider2.Text = "Change...";
             this.changeProvider2.UseVisualStyleBackColor = true;
             this.changeProvider2.Click += new System.EventHandler(this.changeProvider2_Click);
-            // 
-            // provider1ComboBox
-            // 
-            this.provider1ComboBox.FormattingEnabled = true;
-            this.provider1ComboBox.Location = new System.Drawing.Point(12, 79);
-            this.provider1ComboBox.Name = "provider1ComboBox";
-            this.provider1ComboBox.Size = new System.Drawing.Size(242, 21);
-            this.provider1ComboBox.TabIndex = 0;
             // 
             // label2
             // 
@@ -89,7 +72,8 @@ namespace App
             // 
             // changeProvider1
             // 
-            this.changeProvider1.Location = new System.Drawing.Point(260, 79);
+            this.changeProvider1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.changeProvider1.Location = new System.Drawing.Point(240, 79);
             this.changeProvider1.Name = "changeProvider1";
             this.changeProvider1.Size = new System.Drawing.Size(75, 23);
             this.changeProvider1.TabIndex = 2;
@@ -98,17 +82,21 @@ namespace App
             // 
             // SimpleEditGroupBox
             // 
+            this.SimpleEditGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.SimpleEditGroupBox.Location = new System.Drawing.Point(12, 112);
             this.SimpleEditGroupBox.Name = "SimpleEditGroupBox";
-            this.SimpleEditGroupBox.Size = new System.Drawing.Size(323, 154);
+            this.SimpleEditGroupBox.Size = new System.Drawing.Size(303, 123);
             this.SimpleEditGroupBox.TabIndex = 3;
             this.SimpleEditGroupBox.TabStop = false;
             this.SimpleEditGroupBox.Text = "Configure provider";
             // 
             // testConnection
             // 
+            this.testConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.testConnection.AutoSize = true;
-            this.testConnection.Location = new System.Drawing.Point(346, 243);
+            this.testConnection.Location = new System.Drawing.Point(326, 212);
             this.testConnection.Name = "testConnection";
             this.testConnection.Size = new System.Drawing.Size(95, 23);
             this.testConnection.TabIndex = 5;
@@ -118,8 +106,9 @@ namespace App
             // 
             // acceptButton
             // 
+            this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.acceptButton.AutoSize = true;
-            this.acceptButton.Location = new System.Drawing.Point(366, 25);
+            this.acceptButton.Location = new System.Drawing.Point(346, 25);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(75, 23);
             this.acceptButton.TabIndex = 5;
@@ -128,9 +117,10 @@ namespace App
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.AutoSize = true;
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(366, 53);
+            this.cancelButton.Location = new System.Drawing.Point(346, 53);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 5;
@@ -139,7 +129,8 @@ namespace App
             // 
             // advancedButton
             // 
-            this.advancedButton.Location = new System.Drawing.Point(366, 214);
+            this.advancedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.advancedButton.Location = new System.Drawing.Point(346, 183);
             this.advancedButton.Name = "advancedButton";
             this.advancedButton.Size = new System.Drawing.Size(75, 23);
             this.advancedButton.TabIndex = 6;
@@ -147,33 +138,33 @@ namespace App
             this.advancedButton.UseVisualStyleBackColor = true;
             this.advancedButton.Click += new System.EventHandler(this.advancedButton_Click);
             // 
-            // textBox3
+            // provider2Textbox
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
+            this.provider2Textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(12, 302);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(430, 86);
-            this.textBox3.TabIndex = 7;
+            this.provider2Textbox.Location = new System.Drawing.Point(12, 27);
+            this.provider2Textbox.Name = "provider2Textbox";
+            this.provider2Textbox.ReadOnly = true;
+            this.provider2Textbox.Size = new System.Drawing.Size(222, 20);
+            this.provider2Textbox.TabIndex = 9;
             // 
-            // label8
+            // provider1Textbox
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 283);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(92, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Connection string:";
+            this.provider1Textbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.provider1Textbox.Location = new System.Drawing.Point(12, 81);
+            this.provider1Textbox.Name = "provider1Textbox";
+            this.provider1Textbox.ReadOnly = true;
+            this.provider1Textbox.Size = new System.Drawing.Size(222, 20);
+            this.provider1Textbox.TabIndex = 10;
             // 
             // NewConnectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 400);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox3);
+            this.ClientSize = new System.Drawing.Size(434, 247);
+            this.Controls.Add(this.provider1Textbox);
+            this.Controls.Add(this.provider2Textbox);
             this.Controls.Add(this.advancedButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.acceptButton);
@@ -182,9 +173,8 @@ namespace App
             this.Controls.Add(this.changeProvider1);
             this.Controls.Add(this.changeProvider2);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.provider1ComboBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.provider2ComboBox);
+            this.MinimumSize = new System.Drawing.Size(442, 274);
             this.Name = "NewConnectionForm";
             this.Text = "Connection properties";
             this.Load += new System.EventHandler(this.NewConnectionForm_Load);
@@ -195,10 +185,8 @@ namespace App
 
         #endregion
 
-        private System.Windows.Forms.ComboBox provider2ComboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button changeProvider2;
-        private System.Windows.Forms.ComboBox provider1ComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button changeProvider1;
         private System.Windows.Forms.GroupBox SimpleEditGroupBox;
@@ -206,7 +194,7 @@ namespace App
         private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button advancedButton;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox provider2Textbox;
+        private System.Windows.Forms.TextBox provider1Textbox;
     }
 }

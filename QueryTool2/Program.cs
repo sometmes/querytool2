@@ -16,9 +16,15 @@ namespace QueryTool2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            LoadHardCodedSettings();
             LoadUserPreferences();
             Application.Run(new QueryWindowForm());
             //Application.Run(new ChangeProviderForm());
+        }
+
+        private static void LoadHardCodedSettings()
+        {
+            SimpleConnectionEditPlugin.RegisterPlugin("System.Data.SqlClient", "App.SimpleConnectionUserControl.MsSqlServer");
         }
 
         static void LoadUserPreferences()

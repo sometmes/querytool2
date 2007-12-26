@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
 
-namespace App.SimpleConnectionUserControl
+namespace App
 {
     interface ISimpleConnectionEdit
     {

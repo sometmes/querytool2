@@ -57,6 +57,7 @@
     <Compile Include="NewConnectionForm.Designer.cs">
       <DependentUpon>NewConnectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PlugIns\SimpleConnectionEditPlugin.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChangeProviderForm.resx">
@@ -83,6 +84,10 @@
     <EmbeddedResource Include="SimpleConnectionUserControl\MsSqlServer.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MsSqlServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleConnectionUserControl\NoEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NoEditor.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -119,6 +124,12 @@
     <Compile Include="SimpleConnectionUserControl\MsSqlServer.Designer.cs">
       <DependentUpon>MsSqlServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleConnectionUserControl\NoEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleConnectionUserControl\NoEditor.Designer.cs">
+      <DependentUpon>NoEditor.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ICSharpCode.TextEditor\ICSharpCode.TextEditor.csproj">
@@ -130,9 +141,6 @@
     <Content Include="SyntaxModes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PlugIns\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -57,5 +57,10 @@ namespace App
             SelectedProvider = listView1.SelectedItems[0].Tag as DataRow;
             this.DialogResult = DialogResult.OK;
         }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            newConn_Click(null, null);
+        }
     }
 }
