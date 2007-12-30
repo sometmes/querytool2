@@ -13,7 +13,7 @@ namespace App.SimpleConnectionUserControl
     public partial class MsSqlServer : UserControl, ISimpleConnectionEdit
     {
         DbProviderFactory _factory;
-        RecentConnection _connectionInfo;
+        ConnectionInfo _connectionInfo;
         SqlConnectionStringBuilder _cnBuilder;
 
         public MsSqlServer()
@@ -29,7 +29,7 @@ namespace App.SimpleConnectionUserControl
             Pwd.Text = _connectionInfo.Password;
         }
 
-        public void EditConnection(DbProviderFactory factory, RecentConnection cninfo)
+        public void EditConnection(DbProviderFactory factory, ConnectionInfo cninfo)
         {
             _factory = factory;
             _connectionInfo = cninfo;

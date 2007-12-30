@@ -40,6 +40,12 @@ namespace App
                 provider2Textbox.Text = f.SelectedProvider["Name"] as string;
                 ShowEditorControl(f.SelectedProvider["InvariantName"] as string);
                 testConnection.Enabled = !string.IsNullOrEmpty(_connString);
+
+                ConnectionInfo cs = new ConnectionInfo();
+                cs.Created = DateTime.Now;
+                //cs.ProviderInvariantName = f.SelectedProvider["InvariantName"] as string;
+                cs.ConnectionString = f.SelectedConnectionString;
+                My.Settings.LastConnection = cs;
             }
         }
 

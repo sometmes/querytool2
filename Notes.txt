@@ -1,0 +1,5 @@
+User settings saved on %LOCALAPPDATA%
+For example
+	C:\Users\user_name\AppData\Local\QueryTool2\...
+	
+	

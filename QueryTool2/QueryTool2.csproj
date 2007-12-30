@@ -43,7 +43,7 @@
     <Compile Include="ChangeProviderForm.Designer.cs">
       <DependentUpon>ChangeProviderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Code\RecentConnection.cs" />
+    <Compile Include="Model\RecentConnection.cs" />
     <Compile Include="ConnectionStringBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>

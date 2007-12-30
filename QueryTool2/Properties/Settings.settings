@@ -2,13 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="QueryTool2.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="kkvaca" Type="System.String" Scope="User">
-      <Value Profile="(Default)">a</Value>
-    </Setting>
-    <Setting Name="RecentConnections" Type="App.RecentConnectionList" Scope="User">
+    <Setting Name="RecentConnections" Type="App.ConnectionInfoList" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Setting" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="LastConnection" Type="App.ConnectionInfo" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

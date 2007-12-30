@@ -15,7 +15,7 @@ namespace App.SimpleConnectionUserControl
             InitializeComponent();
         }
 
-        public void EditConnection(System.Data.Common.DbProviderFactory factory, RecentConnection cninfo)
+        public void EditConnection(System.Data.Common.DbProviderFactory factory, ConnectionInfo cninfo)
         {
             
         }

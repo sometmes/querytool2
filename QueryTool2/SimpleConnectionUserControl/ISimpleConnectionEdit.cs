@@ -7,6 +7,6 @@ namespace App
 {
     interface ISimpleConnectionEdit
     {
-        void EditConnection(DbProviderFactory factory, RecentConnection cninfo);
+        void EditConnection(DbProviderFactory factory, ConnectionInfo cninfo);
     }
 }

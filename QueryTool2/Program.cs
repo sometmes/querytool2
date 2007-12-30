@@ -17,9 +17,14 @@ namespace QueryTool2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             LoadHardCodedSettings();
-            LoadUserPreferences();
+            Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Application.Run(new QueryWindowForm());
             //Application.Run(new ChangeProviderForm());
+        }
+
+        static void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            My.Settings.Save();
         }
 
         private static void LoadHardCodedSettings()
@@ -32,28 +37,15 @@ namespace QueryTool2
             string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             path = Path.Combine(path, "QueryTool2\\Preferences.xml");
             //if (File.Exists(path))
-            object ol = App.Settings.RecentConnections;
-            App.Settings.kkvaca = "prova2";
+            object ol = My.Settings.RecentConnections;
             //RecentConnectionList l = new RecentConnectionList();
-            RecentConnection r = new RecentConnection();
+            ConnectionInfo r = new ConnectionInfo();
             //l.Add(r);
             r.ConnectionString = "1";
             r.Password = "2";
             r.Created = DateTime.Now;
-            App.Settings.RecentConnections.Add(r);
-            App.Settings.Save();
-
-        }
-    }
-
-    public class App
-    {
-        internal static QueryTool2.Properties.Settings Settings
-        {
-            get
-            {
-                return QueryTool2.Properties.Settings.Default;
-            }
+            My.Settings.RecentConnections.Add(r);
+            My.Settings.Save();
         }
     }
 }

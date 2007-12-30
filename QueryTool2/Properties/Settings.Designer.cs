@@ -25,21 +25,9 @@ namespace QueryTool2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("a")]
-        public string kkvaca {
+        public App.ConnectionInfoList RecentConnections {
             get {
-                return ((string)(this["kkvaca"]));
-            }
-            set {
-                this["kkvaca"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::App.RecentConnectionList RecentConnections {
-            get {
-                return ((global::App.RecentConnectionList)(this["RecentConnections"]));
+                return ((App.ConnectionInfoList)(this["RecentConnections"]));
             }
             set {
                 this["RecentConnections"] = value;
@@ -48,12 +36,12 @@ namespace QueryTool2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection Setting {
+        public App.ConnectionInfo LastConnection {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Setting"]));
+                return ((App.ConnectionInfo)(this["LastConnection"]));
             }
             set {
-                this["Setting"] = value;
+                this["LastConnection"] = value;
             }
         }
     }

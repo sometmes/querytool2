@@ -12,7 +12,9 @@ namespace QueryTool2.Properties {
         
         public Settings() {
             if (this.RecentConnections == null)
-                this.RecentConnections = new RecentConnectionList();
+                this.RecentConnections = new ConnectionInfoList();
+            if (this.LastConnection == null)
+                this.LastConnection = new ConnectionInfo();
 
             // // To add event handlers for saving and changing settings, uncomment the lines below:
             //
@@ -28,6 +30,20 @@ namespace QueryTool2.Properties {
         
         private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
             // Add code to handle the SettingsSaving event here.
+        }
+    }
+}
+
+namespace App
+{
+    internal partial class My
+    {
+        internal static QueryTool2.Properties.Settings Settings
+        {
+            get
+            {
+                return QueryTool2.Properties.Settings.Default;
+            }
         }
     }
 }
