@@ -25,9 +25,9 @@ namespace QueryTool2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public App.ConnectionInfoList RecentConnections {
+        public App.ConnectionInfoMap RecentConnections {
             get {
-                return ((App.ConnectionInfoList)(this["RecentConnections"]));
+                return ((App.ConnectionInfoMap)(this["RecentConnections"]));
             }
             set {
                 this["RecentConnections"] = value;
@@ -36,9 +36,9 @@ namespace QueryTool2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public App.ConnectionInfo LastConnection {
+        public global::App.ConnectionInfo LastConnection {
             get {
-                return ((App.ConnectionInfo)(this["LastConnection"]));
+                return ((global::App.ConnectionInfo)(this["LastConnection"]));
             }
             set {
                 this["LastConnection"] = value;

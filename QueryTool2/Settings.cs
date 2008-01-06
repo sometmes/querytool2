@@ -12,7 +12,7 @@ namespace QueryTool2.Properties {
         
         public Settings() {
             if (this.RecentConnections == null)
-                this.RecentConnections = new ConnectionInfoList();
+                this.RecentConnections = new ConnectionInfoMap();
             if (this.LastConnection == null)
                 this.LastConnection = new ConnectionInfo();
 

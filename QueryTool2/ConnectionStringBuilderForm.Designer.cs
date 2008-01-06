@@ -80,6 +80,7 @@ namespace App
             // 
             this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.acceptButton.AutoSize = true;
+            this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.acceptButton.Location = new System.Drawing.Point(305, 331);
             this.acceptButton.Name = "acceptButton";
             this.acceptButton.Size = new System.Drawing.Size(75, 23);

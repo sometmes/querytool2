@@ -114,6 +114,7 @@ namespace App
             this.acceptButton.TabIndex = 5;
             this.acceptButton.Text = "OK";
             this.acceptButton.UseVisualStyleBackColor = true;
+            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // cancelButton
             // 

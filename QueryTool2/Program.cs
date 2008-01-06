@@ -34,18 +34,18 @@ namespace QueryTool2
 
         static void LoadUserPreferences()
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            path = Path.Combine(path, "QueryTool2\\Preferences.xml");
-            //if (File.Exists(path))
-            object ol = My.Settings.RecentConnections;
-            //RecentConnectionList l = new RecentConnectionList();
-            ConnectionInfo r = new ConnectionInfo();
-            //l.Add(r);
-            r.ConnectionString = "1";
-            r.Password = "2";
-            r.Created = DateTime.Now;
-            My.Settings.RecentConnections.Add(r);
-            My.Settings.Save();
+            //string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //path = Path.Combine(path, "QueryTool2\\Preferences.xml");
+            ////if (File.Exists(path))
+            //object ol = My.Settings.RecentConnections;
+            ////RecentConnectionList l = new RecentConnectionList();
+            //ConnectionInfo r = new ConnectionInfo();
+            ////l.Add(r);
+            //r.ConnectionString = "1";
+            //r.Password = "2";
+            //r.Created = DateTime.Now;
+            //My.Settings.RecentConnections.Add(r);
+            //My.Settings.Save();
         }
     }
 }

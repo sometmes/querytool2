@@ -11,8 +11,25 @@ namespace App
 {
     public partial class NewConnectionForm : Form
     {
-        DbProviderFactory _factory=null;
-        string _connString = "";
+        ConnectionInfo _connection;
+
+        public ConnectionInfo Connection
+        {
+            get { return _connection; }
+            set
+            {
+                _connection = value;
+                if (_connection != null)
+                {
+                    _factory = DbProviderFactories.GetFactory(_connection.ProviderInvariantName);
+                    provider2Textbox.Text = _connection.ProviderName;
+                    ShowEditorControl(_connection.ProviderInvariantName);
+                    testConnection.Enabled = !string.IsNullOrEmpty(_connection.ConnectionString);
+                }
+            }
+        }
+
+        DbProviderFactory _factory = null;
         ISimpleConnectionEdit _editor = null;
 
         public NewConnectionForm()
@@ -24,6 +41,8 @@ namespace App
         private void NewConnectionForm_Load(object sender, EventArgs e)
         {
             _dessignMinimumSize = this.MinimumSize;
+            Connection = My.Settings.LastConnection;
+
             //SimpleConnectionUserControl.MsSqlServer edit = new App.SimpleConnectionUserControl.MsSqlServer();
             //edit.Location = new Point(6, 15);
             //SimpleEditGroupBox.Controls.Add(edit);
@@ -35,17 +54,7 @@ namespace App
             ChangeProviderForm f = new ChangeProviderForm();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                _factory = DbProviderFactories.GetFactory(f.SelectedProvider);
-                _connString = f.SelectedConnectionString;
-                provider2Textbox.Text = f.SelectedProvider["Name"] as string;
-                ShowEditorControl(f.SelectedProvider["InvariantName"] as string);
-                testConnection.Enabled = !string.IsNullOrEmpty(_connString);
-
-                ConnectionInfo cs = new ConnectionInfo();
-                cs.Created = DateTime.Now;
-                //cs.ProviderInvariantName = f.SelectedProvider["InvariantName"] as string;
-                cs.ConnectionString = f.SelectedConnectionString;
-                My.Settings.LastConnection = cs;
+                Connection = f.SelectedConnection;
             }
         }
 
@@ -67,7 +76,7 @@ namespace App
         private void testConnection_Click(object sender, EventArgs e)
         {
             DbConnection cn = _factory.CreateConnection();
-            cn.ConnectionString = _connString;
+            cn.ConnectionString = _connection.ConnectionString;
             try
             {
                 cn.Open();
@@ -89,11 +98,17 @@ namespace App
         {
             ConnectionStringBuilderForm f = new ConnectionStringBuilderForm();
             f.ConnectionStringBuilder = _factory.CreateConnectionStringBuilder();
-            f.ConnectionStringBuilder.ConnectionString = _connString;
+            f.ConnectionStringBuilder.ConnectionString = _connection.ConnectionString;
             if (f.ShowDialog() == DialogResult.OK)
             {
-                _connString = f.ConnectionStringBuilder.ConnectionString;
+                _connection.ConnectionString = f.ConnectionStringBuilder.ConnectionString;
+                testConnection.Enabled = !string.IsNullOrEmpty(_connection.ConnectionString);
             }
+        }
+
+        private void acceptButton_Click(object sender, EventArgs e)
+        {
+            My.Settings.LastConnection = _connection;
         }
 
     }

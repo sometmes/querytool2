@@ -23,6 +23,7 @@ namespace App
             propertyGrid1.SelectedObject = ConnectionStringBuilder;
             propertyGrid1.PropertyValueChanged += new PropertyValueChangedEventHandler(propertyGrid1_PropertyValueChanged);
             textBox1.Validated += new EventHandler(textBox1_Validated);
+            textBox1.Text = ConnectionStringBuilder.ConnectionString;
         }
 
         void textBox1_Validated(object sender, EventArgs e)

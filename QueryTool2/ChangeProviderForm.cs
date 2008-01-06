@@ -11,15 +11,13 @@ namespace App
 {
     public partial class ChangeProviderForm : Form
     {
+        public ConnectionInfo SelectedConnection;
         DataTable providerList;
 
         public ChangeProviderForm()
         {
             InitializeComponent();
         }
-
-        public DataRow SelectedProvider;
-        public string SelectedConnectionString;
 
         private void ChangeProviderForm_Load(object sender, EventArgs e)
         {
@@ -54,7 +52,11 @@ namespace App
 
         private void newConn_Click(object sender, EventArgs e)
         {
-            SelectedProvider = listView1.SelectedItems[0].Tag as DataRow;
+            DataRow selectedProvider = listView1.SelectedItems[0].Tag as DataRow;
+            SelectedConnection = new ConnectionInfo();
+            SelectedConnection.SupportsProviderFactory = true;
+            SelectedConnection.ProviderInvariantName = selectedProvider["InvariantName"] as string;
+            SelectedConnection.ProviderName = selectedProvider["Name"] as string;
             this.DialogResult = DialogResult.OK;
         }
 
