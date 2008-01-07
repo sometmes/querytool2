@@ -3,30 +3,73 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using System.Data.Common;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace App
 {
-    [Serializable]
+    [XmlType]
     public class ConnectionInfo
     {
-        private DateTime _created;
         public DateTime Created { get { return _created; } set { _created = value; } }
-        public DateTime LastUsed;
-        private string _connectionString;
-        public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
-        private string _connectionStringWithPwd;
-        [NonSerialized]
-        public string ConnectionStringWithPwd { get { return _connectionStringWithPwd; } set { _connectionStringWithPwd = value; } }
-        private string _password;
-        [NonSerialized]
-        public string Password { get { return _password; } set { _password = value; } }
-        public string PasswordEncrypted { get { return _password; } set { _password = value; } }
-        private string _passwordKey;
-        public string PasswordKey { get { return _passwordKey; } set { _passwordKey = value; } }
+        private DateTime _created;
 
-        private bool _supportsProviderFactory;
+        public DateTime LastUsed { get { return _lastUsed; } set { _lastUsed = value; } }
+        private DateTime _lastUsed;
+
+        public string ConnectionString
+        {
+            get { return _connectionString; }
+            set
+            {
+                _connectionString = value;
+                _connectionStringWithPwd = null;
+            }
+        }
+        private string _connectionString;
+
+        [XmlIgnore]
+        public string ConnectionStringWithPwd
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                    _connectionStringWithPwd = "";
+                if (_connectionStringWithPwd == null)
+                {
+                    DbProviderFactory factory = DbProviderFactories.GetFactory(_providerInvariantName);
+                    DbConnectionStringBuilder csb = factory.CreateConnectionStringBuilder();
+                    csb.ConnectionString = _connectionString;
+                    csb[_passwordKey] = Password;
+                    _connectionStringWithPwd = csb.ConnectionString;
+                }
+                return _connectionStringWithPwd;
+            }
+            set { _connectionStringWithPwd = value; }
+        }
+        private string _connectionStringWithPwd;
+
+        [XmlIgnore]
+        public string Password { get { return _password; } set { _password = value; } }
+        public string PasswordEncrypted
+        {
+            get
+            {
+                return Lib.DPAPI.Encrypt(_password);
+            }
+            set
+            {
+                _password = Lib.DPAPI.Decrypt(value);
+            }
+        }
+        private string _password;
+
+        public string PasswordKey { get { return _passwordKey; } set { _passwordKey = value; } }
+        private string _passwordKey;
+
         public bool SupportsProviderFactory { get { return _supportsProviderFactory; } set { _supportsProviderFactory = value; } }
-        private string _providerInvariantName;
+        private bool _supportsProviderFactory;
+
         public string ProviderInvariantName
         {
             get { return _providerInvariantName; }
@@ -36,27 +79,31 @@ namespace App
                 CheckPasswordKey();
             }
         }
+        private string _providerInvariantName;
+
         private void CheckPasswordKey()
         {
-            if (_providerInvariantName == "")
+            if (_providerInvariantName == "System.Data.SqlClient")
                 _passwordKey = "Password";
             //else if ...
             else
                 _passwordKey = "Password";
         }
+
         public void UpdateConnectionString(DbConnectionStringBuilder csb)
         {
             string pwd = csb[_passwordKey] as string;
-            if (!string.IsNullOrEmpty(pwd))
-            {
+            if (!string.IsNullOrEmpty(pwd) && pwd != "****")
                 _password = pwd;
-                csb[_passwordKey] = "****";
-            }
+
+            csb[_passwordKey] = _password;
+            _connectionStringWithPwd = csb.ConnectionString;
+            csb[_passwordKey] = null;
             _connectionString = csb.ConnectionString;
         }
 
-        string providerName;
-        public string ProviderName { get { return providerName; } set { providerName = value; } }
+        public string ProviderName { get { return _providerName; } set { _providerName = value; } }
+        private string _providerName;
 
         public ConnectionInfo()
         {

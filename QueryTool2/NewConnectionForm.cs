@@ -101,7 +101,7 @@ namespace App
             f.ConnectionStringBuilder.ConnectionString = _connection.ConnectionString;
             if (f.ShowDialog() == DialogResult.OK)
             {
-                _connection.ConnectionString = f.ConnectionStringBuilder.ConnectionString;
+                _connection.UpdateConnectionString(f.ConnectionStringBuilder);
                 testConnection.Enabled = !string.IsNullOrEmpty(_connection.ConnectionString);
             }
         }
@@ -109,6 +109,10 @@ namespace App
         private void acceptButton_Click(object sender, EventArgs e)
         {
             My.Settings.LastConnection = _connection;
+            if (_connection != null)
+                MessageBox.Show(_connection.ConnectionStringWithPwd);
+            else
+                MessageBox.Show("null");
         }
 
     }
