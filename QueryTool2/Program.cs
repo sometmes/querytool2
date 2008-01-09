@@ -30,6 +30,31 @@ namespace QueryTool2
         private static void LoadHardCodedSettings()
         {
             SimpleConnectionEditPlugin.RegisterPlugin("System.Data.SqlClient", "App.SimpleConnectionUserControl.MsSqlServer");
+
+            //My.Settings.RecentConnections.ProviderInvariantName = "puta merda dels collons!!!";
+            //My.Settings.RecentConnections.Connections.Add(new ConnectionInfo());
+
+            My.Settings.RecentConnections.Clear();
+            My.Settings.RecentConnections.Add(new ConnectionInfoList("uno"));
+            My.Settings.RecentConnections[0].Connections.Add(new ConnectionInfo());
+            My.Settings.RecentConnections[0].Connections[0].ConnectionString = "AAAAAAAAAAAAAAAAAAAAA";
+            My.Settings.RecentConnections[0].Connections.Add(new ConnectionInfo());
+            My.Settings.RecentConnections[0].Connections[1].ConnectionString = "BBBBBBBBBBBBBBBBBBBBB";
+            My.Settings.RecentConnections[0].Connections.Add(new ConnectionInfo());
+            My.Settings.RecentConnections[0].Connections[2].ConnectionString = "CCCCCCCCCCCCCCCCCCCCC";
+            My.Settings.RecentConnections.Add(new ConnectionInfoList("dos"));
+            My.Settings.RecentConnections[1].Connections.Add(new ConnectionInfo());
+            My.Settings.RecentConnections[1].Connections[0].ConnectionString = "2222222222222222222222";
+            My.Settings.RecentConnections.Add(new ConnectionInfoList("tres"));
+            My.Settings.RecentConnections[2].Connections.Add(new ConnectionInfo());
+            My.Settings.RecentConnections[2].Connections[0].ConnectionString = "3333333333333333333333";
+
+            //My.Settings.RecentConnections.Add("kkdelavaca");
+
+
+            //System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(My.Settings.RecentConnections.GetType());
+            //TextWriter t =
+            My.Settings.Save();
         }
 
         static void LoadUserPreferences()

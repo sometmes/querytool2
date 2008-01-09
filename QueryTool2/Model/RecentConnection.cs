@@ -111,8 +111,43 @@ namespace App
         }
     }
 
-    [Serializable]
-    public class ConnectionInfoMap : Dictionary<string,ConnectionInfo>
+    [XmlType]
+    public class ConnectionInfoList
     {
+        public ConnectionInfoList()
+        {
+        }
+
+        public ConnectionInfoList(string providerInvariantName)
+        {
+            _providerInvariantName = providerInvariantName;
+        }
+
+        public string ProviderInvariantName
+        {
+            get { return _providerInvariantName; }
+            set { _providerInvariantName = value; }
+        }
+
+        private string _providerInvariantName;
+
+
+        private List<ConnectionInfo> _connections = new List<ConnectionInfo>();
+
+        public List<ConnectionInfo> Connections
+        {
+            get { return _connections; }
+            set { _connections = value; }
+        }
+    }
+
+    [XmlType]
+    public class ConnectionInfoMap 
+        : System.Collections.ObjectModel.KeyedCollection<string, ConnectionInfoList>
+    {
+        protected override string GetKeyForItem(ConnectionInfoList item)
+        {
+            return item.ProviderInvariantName;
+        }
     }
 }
