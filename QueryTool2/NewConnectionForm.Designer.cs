@@ -177,6 +177,8 @@ namespace App
             this.Controls.Add(this.label1);
             this.MinimumSize = new System.Drawing.Size(442, 274);
             this.Name = "NewConnectionForm";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Connection properties";
             this.Load += new System.EventHandler(this.NewConnectionForm_Load);
             this.ResumeLayout(false);

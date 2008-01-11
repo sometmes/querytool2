@@ -42,11 +42,6 @@ namespace App
         {
             _dessignMinimumSize = this.MinimumSize;
             Connection = My.Settings.LastConnection;
-
-            //SimpleConnectionUserControl.MsSqlServer edit = new App.SimpleConnectionUserControl.MsSqlServer();
-            //edit.Location = new Point(6, 15);
-            //SimpleEditGroupBox.Controls.Add(edit);
-            //testConnection.Enabled = false;
         }
 
         private void changeProvider2_Click(object sender, EventArgs e)
@@ -89,16 +84,12 @@ namespace App
 
         }
 
-        private void configureAdvanced_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void advancedButton_Click(object sender, EventArgs e)
         {
             ConnectionStringBuilderForm f = new ConnectionStringBuilderForm();
             f.ConnectionStringBuilder = _factory.CreateConnectionStringBuilder();
             f.ConnectionStringBuilder.ConnectionString = _connection.ConnectionString;
+            f.Text = _connection.ProviderName + " connection string properties.";
             if (f.ShowDialog() == DialogResult.OK)
             {
                 _connection.UpdateConnectionString(f.ConnectionStringBuilder);
@@ -108,11 +99,8 @@ namespace App
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            My.Settings.LastConnection = _connection;
-            if (_connection != null)
-                MessageBox.Show(_connection.ConnectionStringWithPwd);
-            else
-                MessageBox.Show("null");
+            My.Settings.LastConnection = _connection.Copy();
+            My.Settings.RecentConnections.RegisterConnection(My.Settings.LastConnection);
         }
 
     }

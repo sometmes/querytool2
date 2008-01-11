@@ -13,6 +13,7 @@ namespace App
     {
         public ConnectionInfo SelectedConnection;
         DataTable providerList;
+        ConnectionInfoList _cl;
 
         public ChangeProviderForm()
         {
@@ -39,15 +40,43 @@ namespace App
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //TODO: recuperar connection string recent
-            //si es buida, canviar botó per defecte a 'newConn' si no a 'lastConn'
-
-            this.AcceptButton = newConn;
-            lastConn.Enabled = false;
             if (listView1.SelectedItems.Count == 0)
-                (this.AcceptButton as Button).Enabled = false;
+                return;
+
+            DataRow selectedProvider = listView1.SelectedItems[0].Tag as DataRow;
+            string sel = selectedProvider["InvariantName"] as string;
+            if (My.Settings.RecentConnections.Contains(sel))
+                _cl = My.Settings.RecentConnections[sel];
             else
-                (this.AcceptButton as Button).Enabled = true;
+                _cl = null;
+            //Recuperar connection string recent
+            //si es buida, canviar botó per defecte a 'newConn' si no a 'lastConn'
+            if (_cl == null)
+            {
+                this.AcceptButton = newConn;
+                lastConn.Enabled = false;
+            }
+            else
+            {
+                this.AcceptButton = lastConn;
+                newConn.Enabled = false;
+
+                RecentScroll.Maximum = _cl.Connections.Count-1;
+                RecentScroll.Minimum = 0;
+                RecentScroll_ValueChanged(null, null);
+            }
+
+            (this.AcceptButton as Button).Enabled = true;
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            newConn_Click(null, null);
+        }
+
+        private void RecentScroll_ValueChanged(object sender, EventArgs e)
+        {
+            recentConnString.Text = _cl.Connections[RecentScroll.Value].ConnectionString;
         }
 
         private void newConn_Click(object sender, EventArgs e)
@@ -60,9 +89,10 @@ namespace App
             this.DialogResult = DialogResult.OK;
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void lastConn_Click(object sender, EventArgs e)
         {
-            newConn_Click(null, null);
+            SelectedConnection = _cl.Connections[RecentScroll.Value].Copy();
+            this.DialogResult = DialogResult.OK;
         }
     }
 }

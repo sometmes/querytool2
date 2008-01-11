@@ -109,6 +109,11 @@ namespace App
         {
             _created = DateTime.Now;
         }
+
+        public ConnectionInfo Copy()
+        {
+            return this.MemberwiseClone() as ConnectionInfo;
+        }
     }
 
     [XmlType]
@@ -148,6 +153,29 @@ namespace App
         protected override string GetKeyForItem(ConnectionInfoList item)
         {
             return item.ProviderInvariantName;
+        }
+
+        public void RegisterConnection(ConnectionInfo ci)
+        {
+            ConnectionInfoList cl;
+            if (this.Contains(ci.ProviderInvariantName))
+                cl = this[ci.ProviderInvariantName];
+            else
+            {
+                cl = new ConnectionInfoList();
+                cl.ProviderInvariantName = ci.ProviderInvariantName;
+                this.Add(cl);
+            }
+
+            foreach (ConnectionInfo ci2 in cl.Connections)
+            {
+                if (ci2.ConnectionString == ci.ConnectionString)
+                {
+                    cl.Connections.Remove(ci2);
+                    break;
+                }
+            }
+            cl.Connections.Insert(0, ci);
         }
     }
 }

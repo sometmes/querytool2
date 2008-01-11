@@ -16,7 +16,7 @@ namespace QueryTool2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            LoadHardCodedSettings();
+            //LoadHardCodedSettings();
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Application.Run(new QueryWindowForm());
             //Application.Run(new ChangeProviderForm());
