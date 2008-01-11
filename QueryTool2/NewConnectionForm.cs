@@ -68,22 +68,6 @@ namespace App
             this.MinimumSize = this.Size;
         }
 
-        private void testConnection_Click(object sender, EventArgs e)
-        {
-            DbConnection cn = _factory.CreateConnection();
-            cn.ConnectionString = _connection.ConnectionString;
-            try
-            {
-                cn.Open();
-                MessageBox.Show("Connected successfully", "Test connection");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.GetBaseException().Message, "Test connection failed");
-            }
-
-        }
-
         private void advancedButton_Click(object sender, EventArgs e)
         {
             ConnectionStringBuilderForm f = new ConnectionStringBuilderForm();
@@ -101,6 +85,57 @@ namespace App
         {
             My.Settings.LastConnection = _connection.Copy();
             My.Settings.RecentConnections.RegisterConnection(My.Settings.LastConnection);
+        }
+
+        EnabledState _enabledState;
+        private void testConnection_Click(object sender, EventArgs e)
+        {
+            DbConnection cn = _factory.CreateConnection();
+            cn.ConnectionString = _connection.ConnectionString;
+            _enabledState = WinForms.DisableBut(cancelButton);
+            cancelButton.DialogResult = DialogResult.None;
+            testConnectWorker.RunWorkerAsync();
+        }
+
+        private class ConnectResult
+        {
+            public bool Success = false;
+            public string Message;
+        }
+
+        private void testConnectWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            DbConnection cn = _factory.CreateConnection();
+            cn.ConnectionString = _connection.ConnectionString;
+            try
+            {
+                cn.Open();
+                ConnectResult r = new ConnectResult();
+                r.Success = true;
+                r.Message = "Connected successfully";
+                e.Result = r;
+            }
+            catch (Exception ex)
+            {
+                ConnectResult r = new ConnectResult();
+                r.Success=false;
+                r.Message = "Test connection failed\r\n\r\n"+ex.GetBaseException().Message;
+                e.Result = r;
+            }
+        }
+
+        private void testconnectWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            WinForms.DisableRestore(_enabledState);
+            ConnectResult r = e.Result as ConnectResult;
+            MessageBox.Show(r.Message, "Test Connection");
+            cancelButton.DialogResult = DialogResult.Cancel;
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            testConnectWorker.CancelAsync();
+            cancelButton.DialogResult = DialogResult.Cancel;
         }
 
     }

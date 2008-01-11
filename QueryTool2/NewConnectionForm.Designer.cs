@@ -34,11 +34,12 @@ namespace App
             this.changeProvider1 = new System.Windows.Forms.Button();
             this.SimpleEditGroupBox = new System.Windows.Forms.GroupBox();
             this.testConnection = new System.Windows.Forms.Button();
-            this.acceptButton = new System.Windows.Forms.Button();
+            this.connectButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.advancedButton = new System.Windows.Forms.Button();
             this.provider2Textbox = new System.Windows.Forms.TextBox();
             this.provider1Textbox = new System.Windows.Forms.TextBox();
+            this.testConnectWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // label1
@@ -104,17 +105,17 @@ namespace App
             this.testConnection.UseVisualStyleBackColor = true;
             this.testConnection.Click += new System.EventHandler(this.testConnection_Click);
             // 
-            // acceptButton
+            // connectButton
             // 
-            this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.acceptButton.AutoSize = true;
-            this.acceptButton.Location = new System.Drawing.Point(346, 25);
-            this.acceptButton.Name = "acceptButton";
-            this.acceptButton.Size = new System.Drawing.Size(75, 23);
-            this.acceptButton.TabIndex = 5;
-            this.acceptButton.Text = "OK";
-            this.acceptButton.UseVisualStyleBackColor = true;
-            this.acceptButton.Click += new System.EventHandler(this.acceptButton_Click);
+            this.connectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.connectButton.AutoSize = true;
+            this.connectButton.Location = new System.Drawing.Point(346, 25);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(75, 23);
+            this.connectButton.TabIndex = 5;
+            this.connectButton.Text = "Connect";
+            this.connectButton.UseVisualStyleBackColor = true;
+            this.connectButton.Click += new System.EventHandler(this.acceptButton_Click);
             // 
             // cancelButton
             // 
@@ -127,6 +128,7 @@ namespace App
             this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // advancedButton
             // 
@@ -159,6 +161,12 @@ namespace App
             this.provider1Textbox.Size = new System.Drawing.Size(222, 20);
             this.provider1Textbox.TabIndex = 10;
             // 
+            // testConnectWorker
+            // 
+            this.testConnectWorker.WorkerSupportsCancellation = true;
+            this.testConnectWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.testConnectWorker_DoWork);
+            this.testConnectWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.testconnectWorker_RunWorkerCompleted);
+            // 
             // NewConnectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,7 +176,7 @@ namespace App
             this.Controls.Add(this.provider2Textbox);
             this.Controls.Add(this.advancedButton);
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.acceptButton);
+            this.Controls.Add(this.connectButton);
             this.Controls.Add(this.testConnection);
             this.Controls.Add(this.SimpleEditGroupBox);
             this.Controls.Add(this.changeProvider1);
@@ -194,10 +202,11 @@ namespace App
         private System.Windows.Forms.Button changeProvider1;
         private System.Windows.Forms.GroupBox SimpleEditGroupBox;
         private System.Windows.Forms.Button testConnection;
-        private System.Windows.Forms.Button acceptButton;
+        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button advancedButton;
         private System.Windows.Forms.TextBox provider2Textbox;
         private System.Windows.Forms.TextBox provider1Textbox;
+        private System.ComponentModel.BackgroundWorker testConnectWorker;
     }
 }
