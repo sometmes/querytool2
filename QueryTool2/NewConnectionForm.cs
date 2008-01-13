@@ -134,7 +134,8 @@ namespace App
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            testConnectWorker.CancelAsync();
+            testConnectWorker.Abort();
+            WinForms.DisableRestore(_enabledState);
             cancelButton.DialogResult = DialogResult.Cancel;
         }
 

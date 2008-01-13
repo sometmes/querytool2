@@ -39,7 +39,7 @@ namespace App
             this.advancedButton = new System.Windows.Forms.Button();
             this.provider2Textbox = new System.Windows.Forms.TextBox();
             this.provider1Textbox = new System.Windows.Forms.TextBox();
-            this.testConnectWorker = new System.ComponentModel.BackgroundWorker();
+            this.testConnectWorker = new App.BackgroundWorker2();
             this.SuspendLayout();
             // 
             // label1
@@ -207,6 +207,6 @@ namespace App
         private System.Windows.Forms.Button advancedButton;
         private System.Windows.Forms.TextBox provider2Textbox;
         private System.Windows.Forms.TextBox provider1Textbox;
-        private System.ComponentModel.BackgroundWorker testConnectWorker;
+        private App.BackgroundWorker2 testConnectWorker;
     }
 }
