@@ -28,9 +28,7 @@ namespace App
             propertyGrid1.Dock = DockStyle.Fill;
             splitContainer3.Panel2Collapsed = true;
 
-            EditingTabController c = new EditingTabController();
-            filesTabControl.TabPages.Add(c.Tab);
-            editingTabList.Add(c.Tab, c);
+            FileNewCommand(null, null);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,11 +63,29 @@ namespace App
 
         private void FileNewCommand(object sender, EventArgs e)
         {
+            FileNewCommand(null);
+        }
+
+        private void FileNewCommand(string fileName)
+        {
             EditingTabController c = new EditingTabController();
+            c.FileName = fileName;
             TabPage tab = c.Tab;
-            tab.Text = SR.NewFile + (filesTabControl.TabPages.Count +1);
+            tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
             filesTabControl.TabPages.Add(tab);
+            editingTabList.Add(c.Tab, c);
             filesTabControl.SelectedTab = tab;
+        }
+
+        private void openToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.OK == openFileDialog1.ShowDialog())
+            {
+                foreach (string filename in openFileDialog1.FileNames)
+                {
+                    FileNewCommand(filename);
+                }
+            }
         }
     }
 }

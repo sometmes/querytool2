@@ -11,6 +11,14 @@ namespace App
 {
     public partial class EditingTabController : UserControl
     {
+        private string fileName;
+
+        public string FileName
+        {
+            get { return fileName; }
+            set { fileName = value; }
+        }
+
         public EditingTabController()
         {
             InitializeComponent();
@@ -28,11 +36,15 @@ namespace App
 
         public TabPage Tab
         {
-            get
-            {
+            get { return tabPage3; }
+        }
 
-                return tabPage3;
-            }
+        public void Save()
+        {
+        }
+
+        public void Close()
+        {
         }
 
         private void UserControl1_Load(object sender, EventArgs e)
