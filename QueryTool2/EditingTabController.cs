@@ -14,21 +14,22 @@ namespace App
         public EditingTabController()
         {
             InitializeComponent();
+
+            splitContainer1.Dock = DockStyle.Fill;
+            resultsTabControl.Dock = DockStyle.Fill;
+            textEditorControl1.Dock = DockStyle.Fill;
+
+            string appPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            HighlightingManager.Manager.AddSyntaxModeFileProvider(new FileSyntaxModeProvider(appPath));
+
+            textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("LOGPARSER");
+            textEditorControl1.ShowEOLMarkers = false;
         }
 
         public TabPage Tab
         {
             get
             {
-                splitContainer1.Dock = DockStyle.Fill;
-                resultsTabControl.Dock = DockStyle.Fill;
-                textEditorControl1.Dock = DockStyle.Fill;
-
-                string appPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-                HighlightingManager.Manager.AddSyntaxModeFileProvider(new FileSyntaxModeProvider(appPath));
-
-                textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("LOGPARSER");
-                textEditorControl1.ShowEOLMarkers = false;
 
                 return tabPage3;
             }

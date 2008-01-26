@@ -61,8 +61,15 @@ namespace App
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+        }
+
+        private void FileNewCommand(object sender, EventArgs e)
+        {
             EditingTabController c = new EditingTabController();
-            filesTabControl.TabPages.Add(c.Tab);
+            TabPage tab = c.Tab;
+            tab.Text = SR.NewFile + (filesTabControl.TabPages.Count +1);
+            filesTabControl.TabPages.Add(tab);
+            filesTabControl.SelectedTab = tab;
         }
     }
 }
