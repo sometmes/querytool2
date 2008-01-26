@@ -153,6 +153,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SAVE.GIF" />
     <Content Include="SyntaxModes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

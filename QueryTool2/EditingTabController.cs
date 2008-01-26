@@ -47,6 +47,13 @@ namespace App
         {
         }
 
+        public void Reload()
+        {
+            if (string.IsNullOrEmpty(this.FileName)) return;
+
+            textEditorControl1.LoadFile(this.fileName);
+        }
+
         private void UserControl1_Load(object sender, EventArgs e)
         {
         }

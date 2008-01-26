@@ -59,6 +59,7 @@ namespace App
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            filesTabControl.SelectedTab.ContextMenuStrip.Show();
         }
 
         private void FileNewCommand(object sender, EventArgs e)
@@ -75,9 +76,10 @@ namespace App
             filesTabControl.TabPages.Add(tab);
             editingTabList.Add(c.Tab, c);
             filesTabControl.SelectedTab = tab;
+            c.Reload();
         }
 
-        private void openToolStripButton_Click(object sender, EventArgs e)
+        private void FileOpenCommand(object sender, EventArgs e)
         {
             if (DialogResult.OK == openFileDialog1.ShowDialog())
             {
@@ -86,6 +88,12 @@ namespace App
                     FileNewCommand(filename);
                 }
             }
+        }
+
+        private void filesTabControl_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                contextMenuStrip1.Show(filesTabControl, e.Location);
         }
     }
 }

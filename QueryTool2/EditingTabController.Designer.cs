@@ -111,6 +111,7 @@ namespace App
             this.textEditorControl1.IsIconBarVisible = false;
             this.textEditorControl1.Location = new System.Drawing.Point(32, 31);
             this.textEditorControl1.Name = "textEditorControl1";
+            this.textEditorControl1.ShowEOLMarkers = true;
             this.textEditorControl1.ShowInvalidLines = false;
             this.textEditorControl1.ShowLineNumbers = false;
             this.textEditorControl1.ShowSpaces = true;
@@ -140,12 +141,12 @@ namespace App
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // UserControl1
+            // EditingTabController
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.filesTabControl);
-            this.Name = "UserControl1";
+            this.Name = "EditingTabController";
             this.Size = new System.Drawing.Size(587, 393);
             this.Load += new System.EventHandler(this.UserControl1_Load);
             this.filesTabControl.ResumeLayout(false);
