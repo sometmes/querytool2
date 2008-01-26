@@ -93,6 +93,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>NoEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditingTabController.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EditingTabController.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -133,6 +137,12 @@
     </Compile>
     <Compile Include="SimpleConnectionUserControl\NoEditor.Designer.cs">
       <DependentUpon>NoEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditingTabController.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditingTabController.Designer.cs">
+      <DependentUpon>EditingTabController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
