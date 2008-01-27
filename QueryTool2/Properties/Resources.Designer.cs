@@ -61,6 +61,33 @@ namespace App.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection failed.
+        /// </summary>
+        internal static string ConnectFail {
+            get {
+                return ResourceManager.GetString("ConnectFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected successfully.
+        /// </summary>
+        internal static string ConnectSuccess {
+            get {
+                return ResourceManager.GetString("ConnectSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect.
+        /// </summary>
+        internal static string ConnectTitle {
+            get {
+                return ResourceManager.GetString("ConnectTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New File.
         /// </summary>
         internal static string NewFile {
@@ -75,6 +102,33 @@ namespace App.Properties {
         internal static string QuerySaveNow {
             get {
                 return ResourceManager.GetString("QuerySaveNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test connection failed.
+        /// </summary>
+        internal static string TestConnectFail {
+            get {
+                return ResourceManager.GetString("TestConnectFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected successfully.
+        /// </summary>
+        internal static string TestConnectSuccess {
+            get {
+                return ResourceManager.GetString("TestConnectSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Connection.
+        /// </summary>
+        internal static string TestConnectTitle {
+            get {
+                return ResourceManager.GetString("TestConnectTitle", resourceCulture);
             }
         }
         

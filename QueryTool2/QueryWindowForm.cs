@@ -47,10 +47,17 @@ namespace App
             
         }
 
-        private void newConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ConnectCommand(object sender, EventArgs e)
         {
             NewConnectionForm f = new NewConnectionForm();
-            f.ShowDialog();
+            if (DialogResult.OK == f.ShowDialog())
+            {
+                if (editingTabList.Count == 0)
+                    FileNewCommand();
+                EditingTabController cont = editingTabList[filesTabControl.SelectedTab];
+                cont.Connection = f.Connection;
+                cont.UpdateTabTitle();
+            }
         }
 
         private void splitContainer3_DoubleClick(object sender, EventArgs e)
@@ -65,13 +72,13 @@ namespace App
 
         private void FileNewCommand(object sender, EventArgs e)
         {
-            FileNewCommand(null);
+            FileNewCommand();
         }
 
-        private void FileNewCommand(string fileName)
+        private void FileNewCommand()
         {
             EditingTabController c = new EditingTabController();
-            c.FileName = fileName;
+            c.FileName = null;
             TabPage tab = c.Tab;
             tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
             filesTabControl.TabPages.Add(tab);

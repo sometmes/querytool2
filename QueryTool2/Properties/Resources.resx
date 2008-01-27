@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConnectFail" xml:space="preserve">
+    <value>Connection failed</value>
+  </data>
+  <data name="ConnectSuccess" xml:space="preserve">
+    <value>Connected successfully</value>
+  </data>
+  <data name="ConnectTitle" xml:space="preserve">
+    <value>Connect</value>
+  </data>
   <data name="NewFile" xml:space="preserve">
     <value>New File</value>
   </data>
   <data name="QuerySaveNow" xml:space="preserve">
     <value>has unsaved edits.\r\nSave now?</value>
+  </data>
+  <data name="TestConnectFail" xml:space="preserve">
+    <value>Test connection failed</value>
+  </data>
+  <data name="TestConnectSuccess" xml:space="preserve">
+    <value>Connected successfully</value>
+  </data>
+  <data name="TestConnectTitle" xml:space="preserve">
+    <value>Test Connection</value>
   </data>
   <data name="TitleQuerySaveNow" xml:space="preserve">
     <value>Save</value>

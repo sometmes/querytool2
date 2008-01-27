@@ -253,13 +253,13 @@ namespace App
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem.Text = "&Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
             // 
             // connectionToolStripMenuItem
@@ -278,7 +278,7 @@ namespace App
             this.newConnectionToolStripMenuItem.Name = "newConnectionToolStripMenuItem";
             this.newConnectionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.newConnectionToolStripMenuItem.Text = "New Connection";
-            this.newConnectionToolStripMenuItem.Click += new System.EventHandler(this.newConnectionToolStripMenuItem_Click);
+            this.newConnectionToolStripMenuItem.Click += new System.EventHandler(this.ConnectCommand);
             // 
             // resetConnectionToolStripMenuItem
             // 

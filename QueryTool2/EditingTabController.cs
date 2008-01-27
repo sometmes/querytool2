@@ -13,11 +13,22 @@ namespace App
     {
         private string fileName;
         int lastUndoItemCount;
+        ConnectionInfo _connection;
+
+        public ConnectionInfo Connection
+        {
+            get { return _connection; }
+            set { _connection = value; }
+        }
 
         public string FileName
         {
             get { return fileName; }
             set { fileName = value; }
+        }
+
+        public void UpdateTabTitle()
+        {
         }
 
         public EditingTabController()

@@ -12,6 +12,10 @@ namespace App
     public partial class NewConnectionForm : Form
     {
         ConnectionInfo _connection;
+        EnabledState _enabledState = new EnabledState();
+        DbProviderFactory _factory = null;
+        ISimpleConnectionEdit _editor = null;
+        Size _dessignMinimumSize;
 
         public ConnectionInfo Connection
         {
@@ -29,15 +33,11 @@ namespace App
             }
         }
 
-        DbProviderFactory _factory = null;
-        ISimpleConnectionEdit _editor = null;
-
         public NewConnectionForm()
         {
             InitializeComponent();
         }
 
-        Size _dessignMinimumSize;
         private void NewConnectionForm_Load(object sender, EventArgs e)
         {
             _dessignMinimumSize = this.MinimumSize;
@@ -83,15 +83,13 @@ namespace App
 
         private void acceptButton_Click(object sender, EventArgs e)
         {
-            My.Settings.LastConnection = _connection.Copy();
-            My.Settings.RecentConnections.RegisterConnection(My.Settings.LastConnection);
+            _enabledState = WinForms.DisableBut(cancelButton);
+            cancelButton.DialogResult = DialogResult.None;
+            connectWorker.RunWorkerAsync();
         }
 
-        EnabledState _enabledState;
         private void testConnection_Click(object sender, EventArgs e)
         {
-            DbConnection cn = _factory.CreateConnection();
-            cn.ConnectionString = _connection.ConnectionString;
             _enabledState = WinForms.DisableBut(cancelButton);
             cancelButton.DialogResult = DialogResult.None;
             testConnectWorker.RunWorkerAsync();
@@ -112,14 +110,14 @@ namespace App
                 cn.Open();
                 ConnectResult r = new ConnectResult();
                 r.Success = true;
-                r.Message = "Connected successfully";
+                r.Message = SR.TestConnectSuccess;
                 e.Result = r;
             }
             catch (Exception ex)
             {
                 ConnectResult r = new ConnectResult();
                 r.Success=false;
-                r.Message = "Test connection failed\r\n\r\n"+ex.GetBaseException().Message;
+                r.Message = SR.TestConnectFail+"\r\n\r\n"+ex.GetBaseException().Message;
                 e.Result = r;
             }
         }
@@ -128,7 +126,7 @@ namespace App
         {
             WinForms.DisableRestore(_enabledState);
             ConnectResult r = e.Result as ConnectResult;
-            MessageBox.Show(r.Message, "Test Connection");
+            MessageBox.Show(r.Message, SR.TestConnectTitle);
             cancelButton.DialogResult = DialogResult.Cancel;
         }
 
@@ -137,6 +135,42 @@ namespace App
             testConnectWorker.Abort();
             WinForms.DisableRestore(_enabledState);
             cancelButton.DialogResult = DialogResult.Cancel;
+        }
+
+        private void connectWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            DbConnection cn = _factory.CreateConnection();
+            cn.ConnectionString = _connection.ConnectionString;
+            try
+            {
+                cn.Open();
+                ConnectResult r = new ConnectResult();
+                r.Success = true;
+                r.Message = SR.ConnectSuccess;
+                e.Result = r;
+            }
+            catch (Exception ex)
+            {
+                ConnectResult r = new ConnectResult();
+                r.Success = false;
+                r.Message = SR.ConnectFail + "\r\n\r\n" + ex.GetBaseException().Message;
+                e.Result = r;
+            }
+        }
+
+        private void connectWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            WinForms.DisableRestore(_enabledState);
+            ConnectResult r = e.Result as ConnectResult;
+            cancelButton.DialogResult = DialogResult.Cancel;
+            if (r.Success == false)
+                MessageBox.Show(r.Message, SR.ConnectTitle);
+            else
+            {
+                My.Settings.LastConnection = _connection.Copy();
+                My.Settings.RecentConnections.RegisterConnection(My.Settings.LastConnection);
+                this.DialogResult = DialogResult.OK;
+            }
         }
 
     }

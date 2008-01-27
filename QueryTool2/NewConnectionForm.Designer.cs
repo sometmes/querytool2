@@ -40,6 +40,7 @@ namespace App
             this.provider2Textbox = new System.Windows.Forms.TextBox();
             this.provider1Textbox = new System.Windows.Forms.TextBox();
             this.testConnectWorker = new App.BackgroundWorker2();
+            this.connectWorker = new App.BackgroundWorker2();
             this.SuspendLayout();
             // 
             // label1
@@ -167,6 +168,12 @@ namespace App
             this.testConnectWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.testConnectWorker_DoWork);
             this.testConnectWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.testconnectWorker_RunWorkerCompleted);
             // 
+            // connectWorker
+            // 
+            this.connectWorker.WorkerSupportsCancellation = true;
+            this.connectWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.connectWorker_DoWork);
+            this.connectWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.connectWorker_RunWorkerCompleted);
+            // 
             // NewConnectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,5 +215,6 @@ namespace App
         private System.Windows.Forms.TextBox provider2Textbox;
         private System.Windows.Forms.TextBox provider1Textbox;
         private App.BackgroundWorker2 testConnectWorker;
+        private BackgroundWorker2 connectWorker;
     }
 }
