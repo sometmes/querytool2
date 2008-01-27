@@ -87,7 +87,7 @@ namespace App
 
         private DialogResult UserQueryClose()
         {
-            return MessageBox.Show(this.tabPage3.Text + " has unsaved edits.\r\nSave now?", "Save", MessageBoxButtons.YesNoCancel);
+            return MessageBox.Show(this.tabPage3.Text + " " + SR.QuerySaveNow, SR.TitleQuerySaveNow, MessageBoxButtons.YesNoCancel);
         }
 
         public void Close()

@@ -201,6 +201,7 @@ namespace App
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.FileNewCommand);
@@ -208,6 +209,7 @@ namespace App
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpenCommand);
@@ -215,6 +217,7 @@ namespace App
             // closeToolStripMenuItem2
             // 
             this.closeToolStripMenuItem2.Name = "closeToolStripMenuItem2";
+            this.closeToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
             this.closeToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.closeToolStripMenuItem2.Text = "&Close";
             this.closeToolStripMenuItem2.Click += new System.EventHandler(this.CloseTabCommand);
@@ -222,6 +225,7 @@ namespace App
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+            this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem1.Text = "&Save";
             // 
@@ -551,6 +555,7 @@ namespace App
             this.Name = "QueryWindowForm";
             this.Text = "QueryWindowForm";
             this.Load += new System.EventHandler(this.QueryWindowForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.QueryWindowForm_FormClosing);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);

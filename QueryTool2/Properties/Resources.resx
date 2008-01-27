@@ -120,4 +120,10 @@
   <data name="NewFile" xml:space="preserve">
     <value>New File</value>
   </data>
+  <data name="QuerySaveNow" xml:space="preserve">
+    <value>has unsaved edits.\r\nSave now?</value>
+  </data>
+  <data name="TitleQuerySaveNow" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

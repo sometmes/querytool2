@@ -70,9 +70,21 @@ namespace App
 
         private void FileNewCommand(string fileName)
         {
+            EditingTabController c = new EditingTabController();
+            c.FileName = fileName;
+            TabPage tab = c.Tab;
+            tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
+            filesTabControl.TabPages.Add(tab);
+            editingTabList.Add(c.Tab, c);
+            filesTabControl.SelectedTab = tab;
+            c.Reload();
+        }
+
+        private void FileOpenCommand(string filename)
+        {
             EditingTabController c;
             bool toadd = true;
-            if (filesTabControl.TabCount > 0 && fileName != null)
+            if (filesTabControl.TabCount > 0)
             {
                 c = editingTabList[filesTabControl.SelectedTab];
                 if (!(c.IsEmpty && c.FileName == null))
@@ -83,9 +95,9 @@ namespace App
             else
                 c = new EditingTabController();
 
-            c.FileName = fileName;
+            c.FileName = filename;
             TabPage tab = c.Tab;
-            tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
+            tab.Text = filename;
             if (toadd)
             {
                 filesTabControl.TabPages.Add(tab);
@@ -101,7 +113,7 @@ namespace App
             {
                 foreach (string filename in openFileDialog1.FileNames)
                 {
-                    FileNewCommand(filename);
+                    FileOpenCommand(filename);
                 }
             }
         }
@@ -135,7 +147,8 @@ namespace App
                 this.contextTabPage = filesTabControl.SelectedTab;
 
             editingTabList[this.contextTabPage].Close();
-            editingTabList.Remove(this.contextTabPage);
+            if (!filesTabControl.TabPages.Contains(this.contextTabPage))
+                editingTabList.Remove(this.contextTabPage);
             this.contextTabPage = null;
         }
 
@@ -146,6 +159,22 @@ namespace App
 
             editingTabList[this.contextTabPage].Save();
 
+        }
+
+        private void QueryWindowForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Dictionary<TabPage, EditingTabController> newlist = new Dictionary<TabPage, EditingTabController>(this.editingTabList);
+            foreach (KeyValuePair<TabPage,EditingTabController> pair in editingTabList)
+            {
+                pair.Value.Close();
+                if (filesTabControl.TabPages.Contains(pair.Key))
+                    break;
+                newlist.Remove(pair.Key);
+            }
+
+            this.editingTabList = newlist;
+            if (this.editingTabList.Count != 0)
+                e.Cancel = true;
         }
     }
 }

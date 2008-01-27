@@ -68,5 +68,23 @@ namespace App.Properties {
                 return ResourceManager.GetString("NewFile", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to has unsaved edits.\r\nSave now?.
+        /// </summary>
+        internal static string QuerySaveNow {
+            get {
+                return ResourceManager.GetString("QuerySaveNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string TitleQuerySaveNow {
+            get {
+                return ResourceManager.GetString("TitleQuerySaveNow", resourceCulture);
+            }
+        }
     }
 }
