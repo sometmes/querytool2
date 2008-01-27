@@ -15,6 +15,24 @@ namespace App
         int lastUndoItemCount;
         ConnectionInfo _connection;
 
+        [Flags]
+        public enum TabTitleStyleEnum
+        {
+            FileName,
+            FilePath,
+            Server,
+            Database,
+            DbUser
+        }
+
+        TabTitleStyleEnum tabTitleStyle;
+
+        public TabTitleStyleEnum TabTitleStyle
+        {
+            get { return tabTitleStyle; }
+            set { tabTitleStyle = value; }
+        }
+
         public ConnectionInfo Connection
         {
             get { return _connection; }
