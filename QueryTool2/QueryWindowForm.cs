@@ -14,6 +14,7 @@ namespace App
     public partial class QueryWindowForm : Form
     {
         Dictionary<TabPage, EditingTabController> editingTabList = new Dictionary<TabPage, EditingTabController>();
+        TabPage contextTabPage = null;
 
         public QueryWindowForm()
         {
@@ -69,13 +70,28 @@ namespace App
 
         private void FileNewCommand(string fileName)
         {
-            EditingTabController c = new EditingTabController();
+            EditingTabController c;
+            bool toadd = true;
+            if (filesTabControl.TabCount > 0 && fileName != null)
+            {
+                c = editingTabList[filesTabControl.SelectedTab];
+                if (!(c.IsEmpty && c.FileName == null))
+                    c = new EditingTabController();
+                else
+                    toadd = false;
+            }
+            else
+                c = new EditingTabController();
+
             c.FileName = fileName;
             TabPage tab = c.Tab;
             tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
-            filesTabControl.TabPages.Add(tab);
-            editingTabList.Add(c.Tab, c);
-            filesTabControl.SelectedTab = tab;
+            if (toadd)
+            {
+                filesTabControl.TabPages.Add(tab);
+                editingTabList.Add(c.Tab, c);
+                filesTabControl.SelectedTab = tab;
+            }
             c.Reload();
         }
 
@@ -93,7 +109,43 @@ namespace App
         private void filesTabControl_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-                contextMenuStrip1.Show(filesTabControl, e.Location);
+            {
+                contextTabPage = TabAtPoint(filesTabControl, e.Location);
+                if (this.contextTabPage!=null)
+                    contextMenuStrip1.Show(filesTabControl, e.Location);
+            }
+        }
+
+        private TabPage TabAtPoint(TabControl tabCtrl, Point location)
+        {
+            for (int i = 0; i < tabCtrl.TabCount; i++)
+            {
+                Rectangle r = tabCtrl.GetTabRect(i);
+                if (r.Contains(location))
+                {
+                    return tabCtrl.TabPages[i];
+                }
+            }
+            return null;
+        }
+
+        private void CloseTabCommand(object sender, EventArgs e)
+        {
+            if (this.contextTabPage == null)
+                this.contextTabPage = filesTabControl.SelectedTab;
+
+            editingTabList[this.contextTabPage].Close();
+            editingTabList.Remove(this.contextTabPage);
+            this.contextTabPage = null;
+        }
+
+        private void FileSaveCommand(object sender, EventArgs e)
+        {
+            if (this.contextTabPage == null)
+                this.contextTabPage = filesTabControl.SelectedTab;
+
+            editingTabList[this.contextTabPage].Save();
+
         }
     }
 }

@@ -36,6 +36,7 @@ namespace App
             this.textEditorControl1 = new ICSharpCode.TextEditor.TextEditorControl();
             this.resultsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             tabPage1 = new System.Windows.Forms.TabPage();
             tabPage2 = new System.Windows.Forms.TabPage();
             this.filesTabControl.SuspendLayout();
@@ -130,6 +131,7 @@ namespace App
             this.resultsTabControl.SelectedIndex = 0;
             this.resultsTabControl.Size = new System.Drawing.Size(180, 100);
             this.resultsTabControl.TabIndex = 0;
+            this.resultsTabControl.DoubleClick += new System.EventHandler(this.resultsTabControl_DoubleClick);
             // 
             // tabPage4
             // 
@@ -140,6 +142,11 @@ namespace App
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "sql";
+            this.saveFileDialog1.Filter = "SQL Files|*.sql|TextFiles|*.txt|All Files|*.*";
             // 
             // EditingTabController
             // 
@@ -167,6 +174,7 @@ namespace App
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage3;
         private ICSharpCode.TextEditor.TextEditorControl textEditorControl1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 
     }
 }

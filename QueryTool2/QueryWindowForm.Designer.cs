@@ -217,6 +217,7 @@ namespace App
             this.closeToolStripMenuItem2.Name = "closeToolStripMenuItem2";
             this.closeToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.closeToolStripMenuItem2.Text = "&Close";
+            this.closeToolStripMenuItem2.Click += new System.EventHandler(this.CloseTabCommand);
             // 
             // saveToolStripMenuItem1
             // 
@@ -425,6 +426,7 @@ namespace App
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.saveToolStripButton.Text = "&Save";
+            this.saveToolStripButton.Click += new System.EventHandler(this.FileSaveCommand);
             // 
             // printToolStripButton
             // 
@@ -511,6 +513,7 @@ namespace App
             this.closeToolStripMenuItem1.Name = "closeToolStripMenuItem1";
             this.closeToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
             this.closeToolStripMenuItem1.Text = "&Close";
+            this.closeToolStripMenuItem1.Click += new System.EventHandler(this.CloseTabCommand);
             // 
             // closeallToolStripMenuItem
             // 
