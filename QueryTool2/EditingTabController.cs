@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
+using System.IO;
 
 namespace App
 {
@@ -13,7 +14,8 @@ namespace App
     {
         private string fileName;
         int lastUndoItemCount;
-        ConnectionInfo _connection;
+        ConnectionInfo connection;
+        TabTitleStyleEnum tabTitleStyle = TabTitleStyleEnum.FileName;
 
         [Flags]
         public enum TabTitleStyleEnum
@@ -25,7 +27,17 @@ namespace App
             DbUser
         }
 
-        TabTitleStyleEnum tabTitleStyle;
+        public void UpdateTabTitle()
+        {
+            string tabtitle= "";
+            if (this.fileName != null && (this.tabTitleStyle & TabTitleStyleEnum.FilePath) == TabTitleStyleEnum.FilePath)
+                tabtitle += Path.GetDirectoryName(this.fileName);
+            if (this.fileName != null && (this.tabTitleStyle & TabTitleStyleEnum.FileName) == TabTitleStyleEnum.FileName)
+                tabtitle += Path.GetFileNameWithoutExtension(this.fileName);
+
+            if (tabtitle != "")
+                tabPage3.Text = tabtitle;
+        }
 
         public TabTitleStyleEnum TabTitleStyle
         {
@@ -35,18 +47,14 @@ namespace App
 
         public ConnectionInfo Connection
         {
-            get { return _connection; }
-            set { _connection = value; }
+            get { return connection; }
+            set { connection = value; }
         }
 
         public string FileName
         {
             get { return fileName; }
             set { fileName = value; }
-        }
-
-        public void UpdateTabTitle()
-        {
         }
 
         public EditingTabController()
