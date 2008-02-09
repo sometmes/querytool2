@@ -7,16 +7,17 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.Common;
 using System.Data.SqlClient;
+using QueryTool2.Plugins;
 
-namespace App.SimpleConnectionUserControl
+namespace QueryTool2.MsSqlPlugIn
 {
-    public partial class MsSqlServer : UserControl, ISimpleConnectionEdit
+    public partial class SimpleConnectionEditor : UserControl, ISimpleConnectionEdit
     {
         DbProviderFactory _factory;
-        ConnectionInfo _connectionInfo;
+        IConnectionInfo _connectionInfo;
         SqlConnectionStringBuilder _cnBuilder;
 
-        public MsSqlServer()
+        public SimpleConnectionEditor()
         {
             InitializeComponent();
         }
@@ -29,7 +30,7 @@ namespace App.SimpleConnectionUserControl
             Pwd.Text = _connectionInfo.Password;
         }
 
-        public void EditConnection(DbProviderFactory factory, ConnectionInfo cninfo)
+        public void EditConnection(DbProviderFactory factory, IConnectionInfo cninfo)
         {
             _factory = factory;
             _connectionInfo = cninfo;

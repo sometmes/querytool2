@@ -103,8 +103,8 @@ namespace App
                 c = new EditingTabController();
 
             c.FileName = filename;
+            c.UpdateTabTitle();
             TabPage tab = c.Tab;
-            tab.Text = filename;
             if (toadd)
             {
                 filesTabControl.TabPages.Add(tab);
@@ -182,6 +182,11 @@ namespace App
             this.editingTabList = newlist;
             if (this.editingTabList.Count != 0)
                 e.Cancel = true;
+        }
+
+        private void executeToolStripButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

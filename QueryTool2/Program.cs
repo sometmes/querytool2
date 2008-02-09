@@ -29,7 +29,7 @@ namespace QueryTool2
 
         private static void LoadHardCodedSettings()
         {
-            SimpleConnectionEditPlugin.RegisterPlugin("System.Data.SqlClient", "App.SimpleConnectionUserControl.MsSqlServer");
+            SimpleConnectionEditorPlugin.RegisterPlugin("System.Data.SqlClient", "App.SimpleConnectionUserControl.MsSqlServer");
 
             //My.Settings.RecentConnections.ProviderInvariantName = "puta merda dels collons!!!";
             //My.Settings.RecentConnections.Connections.Add(new ConnectionInfo());

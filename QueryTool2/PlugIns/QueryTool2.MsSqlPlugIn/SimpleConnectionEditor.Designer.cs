@@ -1,6 +1,6 @@
-namespace App.SimpleConnectionUserControl
+namespace QueryTool2.MsSqlPlugIn
 {
-    partial class MsSqlServer
+    partial class SimpleConnectionEditor
     {
         /// <summary> 
         /// Required designer variable.

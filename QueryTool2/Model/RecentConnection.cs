@@ -5,17 +5,51 @@ using System.Collections;
 using System.Data.Common;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using QueryTool2.Plugins;
+using System.Data;
 
 namespace App
 {
     [XmlType]
-    public class ConnectionInfo
+    public class ConnectionInfo : QueryTool2.Plugins.IConnectionInfo
     {
         public DateTime Created { get { return _created; } set { _created = value; } }
         private DateTime _created;
 
         public DateTime LastUsed { get { return _lastUsed; } set { _lastUsed = value; } }
         private DateTime _lastUsed;
+
+        IConnectionProperties connectionProperties = null;
+
+        IDbConnection openConnection = null;
+
+        [XmlIgnore]
+        public IConnectionProperties ConnectionProperties
+        {
+            get
+            {
+                if (this.connectionProperties == null)
+                {
+                    this.connectionProperties = ConnectionPropertiesPlugin.CreateInstance(this._providerInvariantName);
+                    this.connectionProperties.Connection = this.openConnection;
+                }
+                return this.connectionProperties;
+            }
+        }
+
+        [XmlIgnore]
+        public IDbConnection OpenConnection
+        {
+            get
+            {
+                return this.openConnection;
+            }
+
+            set
+            {
+                this.openConnection = value;
+            }
+        }
 
         public string ConnectionString
         {

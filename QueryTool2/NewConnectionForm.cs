@@ -6,6 +6,7 @@ using System.Data.Common;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using QueryTool2.Plugins;
 
 namespace App
 {
@@ -55,7 +56,7 @@ namespace App
 
         void ShowEditorControl(string invariantName)
         {
-            ISimpleConnectionEdit _editor = SimpleConnectionEditPlugin.CreateInstance(invariantName);
+            ISimpleConnectionEdit _editor = SimpleConnectionEditorPlugin.CreateInstance(invariantName);
             UserControl editor = _editor as UserControl;
             editor.Location = new Point(6, 15);
             SimpleEditGroupBox.Controls.Clear();
@@ -141,6 +142,7 @@ namespace App
         {
             DbConnection cn = _factory.CreateConnection();
             cn.ConnectionString = _connection.ConnectionString;
+            _connection.OpenConnection = cn;
             try
             {
                 cn.Open();
@@ -164,7 +166,10 @@ namespace App
             ConnectResult r = e.Result as ConnectResult;
             cancelButton.DialogResult = DialogResult.Cancel;
             if (r.Success == false)
+            {
                 MessageBox.Show(r.Message, SR.ConnectTitle);
+                _connection.OpenConnection = null;
+            }
             else
             {
                 My.Settings.LastConnection = _connection.Copy();

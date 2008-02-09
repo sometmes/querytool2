@@ -15,7 +15,7 @@ namespace App
         private string fileName;
         int lastUndoItemCount;
         ConnectionInfo connection;
-        TabTitleStyleEnum tabTitleStyle = TabTitleStyleEnum.FileName;
+        TabTitleStyleEnum tabTitleStyle = TabTitleStyleEnum.FileName | TabTitleStyleEnum.Server | TabTitleStyleEnum.Database;
 
         [Flags]
         public enum TabTitleStyleEnum
@@ -33,8 +33,13 @@ namespace App
             if (this.fileName != null && (this.tabTitleStyle & TabTitleStyleEnum.FilePath) == TabTitleStyleEnum.FilePath)
                 tabtitle += Path.GetDirectoryName(this.fileName);
             if (this.fileName != null && (this.tabTitleStyle & TabTitleStyleEnum.FileName) == TabTitleStyleEnum.FileName)
-                tabtitle += Path.GetFileNameWithoutExtension(this.fileName);
-
+                tabtitle += (tabtitle == "" ? "" : "\\") + Path.GetFileName(this.fileName);
+            if (this.connection != null && (this.tabTitleStyle & TabTitleStyleEnum.Server) == TabTitleStyleEnum.Server)
+                tabtitle += (tabtitle == "" ? "" : ":") + connection.ConnectionProperties.Server;
+            if (this.connection != null && (this.tabTitleStyle & TabTitleStyleEnum.Database) == TabTitleStyleEnum.Database)
+                tabtitle += (tabtitle == "" ? "" : ":") + connection.ConnectionProperties.Database;
+            if (this.connection != null && (this.tabTitleStyle & TabTitleStyleEnum.DbUser) == TabTitleStyleEnum.DbUser)
+                tabtitle += (tabtitle == "" ? "" : ":") + connection.ConnectionProperties.UserName;
             if (tabtitle != "")
                 tabPage3.Text = tabtitle;
         }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
 
-namespace App
+namespace QueryTool2.Plugins
 {
     interface ISimpleConnectionEdit
     {
-        void EditConnection(DbProviderFactory factory, ConnectionInfo cninfo);
+        void EditConnection(DbProviderFactory factory, IConnectionInfo cninfo);
     }
 }

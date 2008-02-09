@@ -1,6 +1,6 @@
-namespace App.SimpleConnectionUserControl
+namespace QueryTool2.DefaultPlugIn
 {
-    partial class NoEditor
+    partial class SimpleConnectionEditor
     {
         /// <summary> 
         /// Required designer variable.
@@ -42,6 +42,7 @@ namespace App.SimpleConnectionUserControl
             this.label1.TabIndex = 0;
             this.label1.Text = "There are no specialized editors for the selected provider.\r\nUse the \"Advanced\" b" +
                 "utton.";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // NoEditor
             // 

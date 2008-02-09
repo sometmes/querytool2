@@ -47,6 +47,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Lib\WinForms.cs" />
+    <Compile Include="PlugIns\DefaultPlugIn\ConnectionProperties.cs" />
+    <Compile Include="PlugIns\QueryTool2.MsSqlPlugIn\Class1.cs" />
+    <Compile Include="PlugIns\QueryTool2.PlugInSystem\IConnectionProperties.cs" />
+    <Compile Include="PlugIns\QueryTool2.MsSqlPlugIn\ConnectionProperties.cs" />
+    <Compile Include="PlugIns\QueryTool2.PlugInSystem\IConnectionInfo.cs" />
     <Compile Include="Model\RecentConnection.cs" />
     <Compile Include="ConnectionStringBuilderForm.cs">
       <SubType>Form</SubType>
@@ -85,13 +90,13 @@
       <SubType>Designer</SubType>
       <DependentUpon>QueryWindowForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SimpleConnectionUserControl\MsSqlServer.resx">
+    <EmbeddedResource Include="PlugIns\QueryTool2.MsSqlPlugIn\SimpleConnectionEditor.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>MsSqlServer.cs</DependentUpon>
+      <DependentUpon>SimpleConnectionEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SimpleConnectionUserControl\NoEditor.resx">
+    <EmbeddedResource Include="PlugIns\DefaultPlugIn\SimpleConnectionEditor.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>NoEditor.cs</DependentUpon>
+      <DependentUpon>SimpleConnectionEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditingTabController.resx">
       <SubType>Designer</SubType>
@@ -125,18 +130,18 @@
       <DependentUpon>QueryWindowForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="SimpleConnectionUserControl\ISimpleConnectionEdit.cs" />
-    <Compile Include="SimpleConnectionUserControl\MsSqlServer.cs">
+    <Compile Include="PlugIns\QueryTool2.PlugInSystem\ISimpleConnectionEdit.cs" />
+    <Compile Include="PlugIns\QueryTool2.MsSqlPlugIn\SimpleConnectionEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SimpleConnectionUserControl\MsSqlServer.Designer.cs">
-      <DependentUpon>MsSqlServer.cs</DependentUpon>
+    <Compile Include="PlugIns\QueryTool2.MsSqlPlugIn\SimpleConnectionEditor.Designer.cs">
+      <DependentUpon>SimpleConnectionEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimpleConnectionUserControl\NoEditor.cs">
+    <Compile Include="PlugIns\DefaultPlugIn\SimpleConnectionEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SimpleConnectionUserControl\NoEditor.Designer.cs">
-      <DependentUpon>NoEditor.cs</DependentUpon>
+    <Compile Include="PlugIns\DefaultPlugIn\SimpleConnectionEditor.Designer.cs">
+      <DependentUpon>SimpleConnectionEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EditingTabController.cs">
       <SubType>UserControl</SubType>
@@ -157,6 +162,9 @@
     <Content Include="SyntaxModes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SimpleConnectionUserControl\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
