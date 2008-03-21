@@ -130,7 +130,8 @@
     <value>New File</value>
   </data>
   <data name="QuerySaveNow" xml:space="preserve">
-    <value>has unsaved edits.\r\nSave now?</value>
+    <value>has unsaved edits.
+Save now?</value>
   </data>
   <data name="TestConnectFail" xml:space="preserve">
     <value>Test connection failed</value>

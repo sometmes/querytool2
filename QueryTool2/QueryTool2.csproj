@@ -150,6 +150,7 @@
       <DependentUpon>EditingTabController.cs</DependentUpon>
     </Compile>
     <Compile Include="SR.cs" />
+    <Compile Include="StatementExecutionController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ICSharpCode.TextEditor\ICSharpCode.TextEditor.csproj">

@@ -15,10 +15,24 @@ namespace App
     {
         Dictionary<TabPage, EditingTabController> editingTabList = new Dictionary<TabPage, EditingTabController>();
         TabPage contextTabPage = null;
+        StatementExecutionController _execController = new StatementExecutionController();
 
         public QueryWindowForm()
         {
             InitializeComponent();
+            _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
+            _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
+        }
+
+        EnabledState _enabledState;
+        void _execController_Start()
+        {
+            //_enabledState = WinForms.DisableBut(null);
+        }
+
+        void _execController_End()
+        {
+            //WinForms.DisableRestore(_enabledState);
         }
 
         private void QueryWindowForm_Load(object sender, EventArgs e)
@@ -54,6 +68,7 @@ namespace App
             {
                 if (editingTabList.Count == 0)
                     FileNewCommand();
+                _execController.Connection = f.Connection.OpenConnection;
                 EditingTabController cont = editingTabList[filesTabControl.SelectedTab];
                 cont.Connection = f.Connection;
                 cont.UpdateTabTitle();
@@ -79,6 +94,7 @@ namespace App
         {
             EditingTabController c = new EditingTabController();
             c.FileName = null;
+            c.ExecController = _execController;
             TabPage tab = c.Tab;
             tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
             filesTabControl.TabPages.Add(tab);
@@ -186,7 +202,8 @@ namespace App
 
         private void executeToolStripButton_Click(object sender, EventArgs e)
         {
-
+            _execController.ExecuteAsync(editingTabList[filesTabControl.SelectedTab].Statement);
         }
+
     }
 }

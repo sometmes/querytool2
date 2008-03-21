@@ -16,6 +16,20 @@ namespace App
         int lastUndoItemCount;
         ConnectionInfo connection;
         TabTitleStyleEnum tabTitleStyle = TabTitleStyleEnum.FileName | TabTitleStyleEnum.Server | TabTitleStyleEnum.Database;
+        StatementExecutionController _execController = new StatementExecutionController();
+
+        internal StatementExecutionController ExecController
+        {
+            get { return _execController; }
+            set 
+            { 
+                _execController = value;
+                _execController.ExecuteAsyncNewResult += new StatementExecutionController.ExecuteAsyncNewResultDelegate(_execController_ExecuteAsyncNewResult);
+                _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
+                _execController.ExecuteAsyncNewRow += new StatementExecutionController.ExecuteAsyncNewRowDelegate(_execController_ExecuteAsyncNewRow);
+            }
+        }
+
 
         [Flags]
         public enum TabTitleStyleEnum
@@ -62,6 +76,11 @@ namespace App
             set { fileName = value; }
         }
 
+        public string Statement
+        {
+            get { return textEditorControl1.Text; }
+        }
+
         public EditingTabController()
         {
             InitializeComponent();
@@ -78,6 +97,57 @@ namespace App
             textEditorControl1.Document.DocumentChanged += new DocumentEventHandler(Document_DocumentChanged);
             textEditorControl1.Document.UndoStack.ActionUndone += new EventHandler(UndoStack_Action);
             textEditorControl1.Document.UndoStack.ActionRedone +=new EventHandler(UndoStack_Action);
+
+            resultsTabControl.TabPages.Clear();
+            CreateGridTab();
+        }
+
+        void _execController_ExecuteAsyncNewResult(DataTable schema)
+        {
+            CreateGridTab();
+            DataGridView grid = resultsTabControl.SelectedTab.Controls[0] as DataGridView;
+            DataGridViewColumn col;
+            foreach (DataRow schemarow in schema.Rows)
+            {
+                col = new DataGridViewTextBoxColumn();
+                col.Name =      (string)    schemarow["ColumnName"];
+                col.ReadOnly =  (bool)      schemarow["IsReadOnly"];
+                grid.Columns.Add(col);
+            }
+
+        }
+
+        void _execController_ExecuteAsyncNewRow(object[] values)
+        {
+            DataGridView grid = resultsTabControl.SelectedTab.Controls[0] as DataGridView;
+            grid.Rows.Add(values);
+            MessageBox.Show("");
+        }
+
+        void _execController_Start()
+        {
+            resultsTabControl.TabPages.Clear();
+            _resultsCount = 0;
+        }
+
+        int _resultsCount;
+        void CreateGridTab()
+        {
+            TabPage page = new TabPage("Resultset " + _resultsCount + 1);
+            DataGridView grid = new DataGridView();
+            grid.Dock = DockStyle.Fill;
+            page.Controls.Add(grid);
+            resultsTabControl.TabPages.Add(page);
+        }
+
+        void CreateTextTab()
+        {
+            TabPage page = new TabPage("Messages");
+            TextBox txt = new TextBox();
+            txt.Multiline = true;
+            txt.Dock = DockStyle.Fill;
+            page.Controls.Add(txt);
+            resultsTabControl.TabPages.Add(page);
         }
 
         void UndoStack_Action(object sender, EventArgs e)
@@ -129,7 +199,7 @@ namespace App
 
         private DialogResult UserQueryClose()
         {
-            return MessageBox.Show(this.tabPage3.Text + " " + SR.QuerySaveNow, SR.TitleQuerySaveNow, MessageBoxButtons.YesNoCancel);
+            return MessageBox.Show("\"" + this.tabPage3.Text + "\"" + " " + SR.QuerySaveNow, SR.TitleQuerySaveNow, MessageBoxButtons.YesNoCancel);
         }
 
         public void Close()
