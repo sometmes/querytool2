@@ -1,0 +1,121 @@
+
+1.	Implement facility to use top and bottom of a tab as initialize/finalizer of
+	any query you execute from this tab.
+	Example of use:
+	Edit manually to declare and assing value to variables used in the 
+	executed sql fragment.
+	Implementation:
+	Define open/clossing mark that delimites initialize and finalizer zone.
+	Can be found inside comments to prevent errors when execuing the full script.
+	For example:
+		declare i int
+		set i = 3
+		-- :::endinit:::
+	
+		... rest of the script
+	
+		-- :::beginfinalize:::
+		drop table #temptable
+	
+2.	Plugin associated to each provider that implements one or more supported
+	techniques to handle large resultsets.
+	1-	Paging and sorting
+		On SqlServer and Sybase, enclose a inner select statement into an outer 
+		select statement to get the inner statement sorted and filtered
+		through datagrid.
+		On sybase setrowcount is used to limit rowset length, and is incremented to
+		reach following pages (Yes, each page is more costly to retrieve than the 
+		previous but that's sybase :-(
+		On MsSql, an ExecuteReader with SchemaOnly is first issued to retrieve
+		keys and base table information. Then ExecuteReader is executed again with
+		ROW_NUMBER() OVER (primary_key ASC)
+	2-  Asynchronousy retrieve and show results on the datagrid. Allow cancellation.
+		Does not allow sort.
+		Using adonet sybase provider you will not see any row until the full resultset
+		is retrieved (due to base dblib). So is adviced to use - 1.- to issue a 
+		'set rowcount' to limit resultset length.
+		Using MsSql provider, you will see records appearing quickly, and being 
+		downloaded util reached the end of the resultsed or user-canceled.
+
+3.	Modes of execution
+	There is only one query editing pane. the mode of execution is determined by how
+	the sql is executed. Ctrl-E runs in custom mode and Ctrl-R in assisted mode.
+	The mode of execution determines the behaviour of the results grid.
+	In Custom mode, the grid is read-only and headers are user to select the entire
+	column.
+	In Assisted mode, the grid is editable. Headers are used to re-run the query
+	with sort, and an aditional band is shown above the results grid with IU to help
+	add filters to the query and change primary key columns, read-only and
+	send-with-updates columns. Also column order can be changed and is remembered
+	between executions for same base table combinations. Hide a column just sends it to
+	the end of the column list and shows in grayed colour.
+	
+	Assisted:
+		Only works for 'select' statements, update delete and more complex sql scripts
+		are not supported and will surelly fail.
+		The 'select' statement is executed as the FROM 'table' of an outer select
+		statement generated internally by the application.
+		This outer statement is responsible of the paging and sorting functionality.
+		Is executed with Ctrl+R.
+		
+		- 1.- is algo honored in this mode.
+	Custom:
+		The sql statement typed by the user is passed to the provider and executed 
+		as-is (CommandBehavior.Default).
+		In this mode is useful - 1.- and -2.2- (if correctly implemented by the 
+		provider)
+		-2.1- is only applicable in Assisted mode.
+		Is executed with Ctrl+E.
+		
+4.	Editable grid
+	In addition of paging sorting and filtering, the results grid in Assisted mode
+	can be edited.
+
+	Although the grid is run in virtual mode, an underling dataset exists to mantain
+	row values and to keed track of the changes.
+	When updating, GetChanges in called on the dataset and send to a DataAdapter.
+	
+	Insert, update and delete statements are not build using regular CommandBuilder
+	instead, a custom routine implemented as a plugin for the provider is used to
+	implement a more flexible aproach.
+	Modification statements are build from schema data table returned by the
+	DataReader, and the changes that the user makes using the provided IU.	
+	
+	If there are multiple base tables the user can select to wich one wants to 
+	execute the update.
+	If a primary key is not known for a base table or needs to be changed, can be 
+	defined using the checkboxes on the headers.
+	
+	Menú options are provided to switch result grid to 'update mode' and 'delete mode'.
+	'update mode'
+		All loaded rows are cleared but not recorded as deletes.
+		New rows can be pasted or inserted and filled manually but are allways send
+		to the provider as updates. If update fails, row are inserted.
+	'delete mode'
+		Is similar to 'update mode' but all visible rows are deleted from the base
+		table when updated to the provider.
+	
+	Special support is implemented for columns of type 'object' (for sql_variant
+	columns, for example) when edited, the modified text is coherted to the existing 
+	real type. Is cohertion fails value is not modified.
+	A combo box is provided for the user to choose a datatype (this is only allowed 
+	for object datatype columns).
+	
+	Columns can be copied and pasted. When copied, QueryTool2-native, raw text, 
+	excel compatible, and html versions are inserted to the clipboard.
+	
+	When pasting, full rows are inserted at the end. If instead of rows, a group of
+	cells have been copied, they can be pasted on existing rows. In this mode, when
+	pasting first selected area changes color and is adjusted to match copied area. If
+	pasted again then values are put.
+	
+	Allways, changes are only sent to the database when update button is pressed.
+	
+	Undo - redo support is implemented for the modifications on the grid.
+	
+	A context menú allows to select one or more rows and 'use to filter another tab ...'
+	When selected, a window is shown with the names of the tabs with result grids in
+	assisted mode. Also base table info is shown to help user select the appropiate tab.
+	With this functionality, some master-detail behaviour is offered.
+	
+	

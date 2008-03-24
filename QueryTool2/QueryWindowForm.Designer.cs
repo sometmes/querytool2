@@ -74,6 +74,7 @@ namespace App
             this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.connectCoolStripButton = new System.Windows.Forms.ToolStripButton();
             this.executeToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -83,7 +84,7 @@ namespace App
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.copyFullPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectCoolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -99,16 +100,18 @@ namespace App
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 446);
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 444);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(674, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(674, 24);
             this.statusStrip1.TabIndex = 0;
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(506, 19);
+            this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // filesTabControl
@@ -480,6 +483,16 @@ namespace App
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
+            // connectCoolStripButton
+            // 
+            this.connectCoolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.connectCoolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("connectCoolStripButton.Image")));
+            this.connectCoolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.connectCoolStripButton.Name = "connectCoolStripButton";
+            this.connectCoolStripButton.Size = new System.Drawing.Size(56, 22);
+            this.connectCoolStripButton.Text = "Connect";
+            this.connectCoolStripButton.Click += new System.EventHandler(this.ConnectCommand);
+            // 
             // executeToolStripButton
             // 
             this.executeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -545,15 +558,12 @@ namespace App
             this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing &Folder";
             // 
-            // connectCoolStripButton
+            // toolStripStatusLabel2
             // 
-            this.connectCoolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.connectCoolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("connectCoolStripButton.Image")));
-            this.connectCoolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.connectCoolStripButton.Name = "connectCoolStripButton";
-            this.connectCoolStripButton.Size = new System.Drawing.Size(56, 22);
-            this.connectCoolStripButton.Text = "Connect";
-            this.connectCoolStripButton.Click += new System.EventHandler(this.ConnectCommand);
+            this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(122, 19);
+            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // QueryWindowForm
             // 
@@ -643,5 +653,6 @@ namespace App
         private System.Windows.Forms.ToolStripMenuItem openContainingFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton executeToolStripButton;
         private System.Windows.Forms.ToolStripButton connectCoolStripButton;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

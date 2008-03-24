@@ -43,6 +43,12 @@
     <Compile Include="ChangeProviderForm.Designer.cs">
       <DependentUpon>ChangeProviderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lib\BackgroundWorker2.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -76,6 +82,10 @@
     <EmbeddedResource Include="ConnectionStringBuilderForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ConnectionStringBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewConnectionForm.resx">
       <SubType>Designer</SubType>
