@@ -18,14 +18,22 @@ namespace App
         TabTitleStyleEnum tabTitleStyle = TabTitleStyleEnum.FileName | TabTitleStyleEnum.Server | TabTitleStyleEnum.Database;
         StatementExecutionController _execController = new StatementExecutionController();
 
+        public delegate void RowCountChangeDelegate(int rowcount);
+        public event RowCountChangeDelegate RowCountChange;
+
         internal StatementExecutionController ExecController
         {
             get { return _execController; }
             set 
             { 
                 _execController = value;
+                _execController.ExecuteAsyncNewResult -= new StatementExecutionController.ExecuteAsyncNewResultDelegate(_execController_ExecuteAsyncNewResult);
                 _execController.ExecuteAsyncNewResult += new StatementExecutionController.ExecuteAsyncNewResultDelegate(_execController_ExecuteAsyncNewResult);
+                _execController.Start -= new StatementExecutionController.StartDelegate(_execController_Start);
                 _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
+                _execController.End -= new StatementExecutionController.EndDelegate(_execController_End);
+                _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
+                _execController.ExecuteAsyncRowFetchComplete -= new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
                 _execController.ExecuteAsyncRowFetchComplete += new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
             }
         }
@@ -106,6 +114,11 @@ namespace App
         {
             resultsTabControl.TabPages.Clear();
             _resultsCount = 0;
+        }
+
+        void _execController_End()
+        {
+            timerRowCount.Enabled = false;
         }
 
         void UndoStack_Action(object sender, EventArgs e)
@@ -209,10 +222,52 @@ namespace App
         void CreateGridTab()
         {
             TabPage page = new TabPage("Resultset " + _resultsCount + 1);
-            DataGridView grid = new DataGridView();
+            TabControl dataAndSchema = new TabControl();
+            dataAndSchema.Dock = DockStyle.Fill;
+            TabPage data = new TabPage("Data");
+            data.Name = "dataTabPage";
+            PagedGridView grid = new PagedGridView();
+            grid.DoubleClick += new EventHandler(grid_DoubleClick);
             grid.Dock = DockStyle.Fill;
-            page.Controls.Add(grid);
+            data.Controls.Add(grid);
+            TabPage schema = new TabPage("Schema");
+            schema.Name = "schemaTabPage";
+            DataGridView schgrid = new DataGridView();
+            schgrid.Dock = DockStyle.Fill;
+            schema.Controls.Add(schgrid);
+            dataAndSchema.TabPages.Add(data);
+            dataAndSchema.TabPages.Add(schema);
+            page.Controls.Add(dataAndSchema);
             resultsTabControl.TabPages.Add(page);
+            dataAndSchema.SelectedTab = data;
+        }
+
+        void grid_DoubleClick(object sender, EventArgs e)
+        {
+            MessageBox.Show((sender as DataGridView).FirstDisplayedScrollingRowIndex.ToString());
+        }
+
+        PagedGridView GetDataGrid(TabPage gridTab)
+        {
+            if (gridTab == null) return null;
+            TabControl tc = gridTab.Controls[0] as TabControl;
+            return tc.TabPages["dataTabPage"].Controls[0] as PagedGridView;
+        }
+
+        DataGridView GetSchemaGrid(TabPage gridTab)
+        {
+            if (gridTab == null) return null;
+            TabControl tc = gridTab.Controls[0] as TabControl;
+            return tc.TabPages["schemaTabPage"].Controls[0] as DataGridView;
+        }
+
+        public DataTable VisibleDataTable
+        {
+            get
+            {
+                if (resultsTabControl.SelectedTab == null) return null;
+                return GetDataGrid(resultsTabControl.SelectedTab).PagedDataSource as DataTable;
+            }
         }
 
         void CreateTextTab()
@@ -225,37 +280,78 @@ namespace App
             resultsTabControl.TabPages.Add(page);
         }
 
-        void CreateSchemaTableTab()
-        {
-            TabPage page = new TabPage("Schema");
-            page.Name = "schemaTabPage";
-            DataGridView grid = new DataGridView();
-            grid.Dock = DockStyle.Fill;
-            page.Controls.Add(grid);
-            resultsTabControl.TabPages.Add(page);
-        }
-
-        void _execController_ExecuteAsyncNewResult(DataTable schema)
+        void _execController_ExecuteAsyncNewResult(StatementExecutionController.ExecuteNewResultEventArgs e)
         {
             CreateGridTab();
-            DataGridView grid = resultsTabControl.SelectedTab.Controls[0] as DataGridView;
+            if (timerRowCount.Enabled == false)
+                timerRowCount.Enabled = true;
+
+            PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
             DataGridViewColumn col;
-            foreach (DataRow schemarow in schema.Rows)
+            foreach (DataRow schemarow in e.Schema.Rows)
             {
                 col = new DataGridViewTextBoxColumn();
-                col.Name = (string)schemarow["ColumnName"];
+                col.Name = (string)schemarow["ColumnName"]+"column";
+                col.DataPropertyName = (string)schemarow["ColumnName"];
                 col.ReadOnly = (bool)schemarow["IsReadOnly"];
                 grid.Columns.Add(col);
             }
 
-            CreateSchemaTableTab();
-            grid = resultsTabControl.TabPages["schemaTabPage"].Controls[0] as DataGridView;
-            grid.DataSource = schema;
+            DataGridView schgrid = GetSchemaGrid(resultsTabControl.SelectedTab);
+            schgrid.DataSource = e.Schema;
+
+            grid.PagedDataSource = e.Data;
         }
 
         void _execController_ExecuteAsyncRowFetchComplete()
         {
-            MessageBox.Show("RowFetchComplete");
+            timerRowCount_Tick(null, null);
+            PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
+            grid.PageNeeded -= new PagedGridView.PageNeededDelegate(grid_PageNeeded);
+            grid.NoMorePagesAvailable();
+        }
+
+        private void timerRowCount_Tick(object sender, EventArgs e)
+        {
+            int rowcount = -1;
+            lock (_execController.DataSet)
+            {
+                if (VisibleDataTable != null)
+                    rowcount = VisibleDataTable.Rows.Count;
+            }
+
+            PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
+            
+            if (grid.RowCount == 0)
+                grid.RowCount = rowcount;
+
+            grid.PageNeeded += new PagedGridView.PageNeededDelegate(grid_PageNeeded);
+
+            if (VisibleDataTable != null)
+            {
+                if (RowCountChange != null)
+                    RowCountChange.Invoke(rowcount);
+            }
+            else
+            {
+                if (RowCountChange != null)
+                    RowCountChange.Invoke(-1);
+            }
+        }
+
+        void grid_PageNeeded(int rowIndex, int pageSize)
+        {
+            int rowcount = -1;
+            lock (_execController.DataSet)
+            {
+                if (VisibleDataTable != null)
+                    rowcount = VisibleDataTable.Rows.Count;
+            }
+
+            PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
+
+            grid.RowCount = rowcount;
+
         }
     }
 }

@@ -28,6 +28,7 @@ namespace App
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TabPage tabPage1;
             System.Windows.Forms.TabPage tabPage2;
             this.filesTabControl = new System.Windows.Forms.TabControl();
@@ -37,6 +38,7 @@ namespace App
             this.resultsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.timerRowCount = new System.Windows.Forms.Timer(this.components);
             tabPage1 = new System.Windows.Forms.TabPage();
             tabPage2 = new System.Windows.Forms.TabPage();
             this.filesTabControl.SuspendLayout();
@@ -148,6 +150,10 @@ namespace App
             this.saveFileDialog1.DefaultExt = "sql";
             this.saveFileDialog1.Filter = "SQL Files|*.sql|TextFiles|*.txt|All Files|*.*";
             // 
+            // timerRowCount
+            // 
+            this.timerRowCount.Tick += new System.EventHandler(this.timerRowCount_Tick);
+            // 
             // EditingTabController
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,6 +181,7 @@ namespace App
         private System.Windows.Forms.TabPage tabPage3;
         private ICSharpCode.TextEditor.TextEditorControl textEditorControl1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Timer timerRowCount;
 
     }
 }

@@ -53,6 +53,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Lib\WinForms.cs" />
+    <Compile Include="PagedGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PlugIns\DefaultPlugIn\ConnectionProperties.cs" />
     <Compile Include="PlugIns\QueryTool2.MsSqlPlugIn\Class1.cs" />
     <Compile Include="PlugIns\QueryTool2.PlugInSystem\IConnectionProperties.cs" />

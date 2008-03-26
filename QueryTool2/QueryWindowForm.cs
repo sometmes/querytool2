@@ -13,8 +13,8 @@ namespace App
 {
     public partial class QueryWindowForm : Form
     {
-        Dictionary<TabPage, EditingTabController> editingTabList = new Dictionary<TabPage, EditingTabController>();
-        TabPage contextTabPage = null;
+        Dictionary<TabPage, EditingTabController> _editingTabList = new Dictionary<TabPage, EditingTabController>();
+        TabPage _contextTabPage = null;
         StatementExecutionController _execController = new StatementExecutionController();
 
         public QueryWindowForm()
@@ -22,17 +22,48 @@ namespace App
             InitializeComponent();
             _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
             _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
+            filesTabControl.Selected += new TabControlEventHandler(filesTabControl_Selected);
+            filesTabControl.Deselected += new TabControlEventHandler(filesTabControl_Deselected);
+            toolStripRowCount.Text = "";
+        }
+
+        void filesTabControl_Deselected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage == null) return;
+            EditingTabController cont = _editingTabList[e.TabPage];
+            if (cont == null) return;
+            cont.RowCountChange -= new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
+        }
+
+        void filesTabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage == null) return;
+            EditingTabController cont = _editingTabList[e.TabPage];
+            if (cont == null) return;
+            cont.RowCountChange += new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
+        }
+
+        void QueryWindowForm_RowCountChange(int rowcount)
+        {
+            if (rowcount != -1)
+            {
+                if (toolStripStatusLabel1.Text == "toolStripStatusLabel1")
+                    toolStripStatusLabel1.Text = rowcount.ToString();
+                toolStripRowCount.Text = rowcount.ToString();
+            }
+            else
+                toolStripRowCount.Text = "";
         }
 
         EnabledState _enabledState;
         void _execController_Start()
         {
-            //_enabledState = WinForms.DisableBut(null);
+
         }
 
         void _execController_End()
         {
-            //WinForms.DisableRestore(_enabledState);
+
         }
 
         private void QueryWindowForm_Load(object sender, EventArgs e)
@@ -44,6 +75,8 @@ namespace App
             splitContainer3.Panel2Collapsed = true;
 
             FileNewCommand(null, null);
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            cont.RowCountChange += new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -66,10 +99,10 @@ namespace App
             NewConnectionForm f = new NewConnectionForm();
             if (DialogResult.OK == f.ShowDialog())
             {
-                if (editingTabList.Count == 0)
+                if (_editingTabList.Count == 0)
                     FileNewCommand();
                 _execController.Connection = f.Connection.OpenConnection;
-                EditingTabController cont = editingTabList[filesTabControl.SelectedTab];
+                EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
                 cont.Connection = f.Connection;
                 cont.UpdateTabTitle();
             }
@@ -98,7 +131,7 @@ namespace App
             TabPage tab = c.Tab;
             tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
             filesTabControl.TabPages.Add(tab);
-            editingTabList.Add(c.Tab, c);
+            _editingTabList.Add(c.Tab, c);
             filesTabControl.SelectedTab = tab;
             c.Reload();
         }
@@ -109,7 +142,7 @@ namespace App
             bool toadd = true;
             if (filesTabControl.TabCount > 0)
             {
-                c = editingTabList[filesTabControl.SelectedTab];
+                c = _editingTabList[filesTabControl.SelectedTab];
                 if (!(c.IsEmpty && c.FileName == null))
                     c = new EditingTabController();
                 else
@@ -124,7 +157,7 @@ namespace App
             if (toadd)
             {
                 filesTabControl.TabPages.Add(tab);
-                editingTabList.Add(c.Tab, c);
+                _editingTabList.Add(c.Tab, c);
                 filesTabControl.SelectedTab = tab;
             }
             c.Reload();
@@ -145,8 +178,8 @@ namespace App
         {
             if (e.Button == MouseButtons.Right)
             {
-                contextTabPage = TabAtPoint(filesTabControl, e.Location);
-                if (this.contextTabPage!=null)
+                _contextTabPage = TabAtPoint(filesTabControl, e.Location);
+                if (this._contextTabPage!=null)
                     contextMenuStrip1.Show(filesTabControl, e.Location);
             }
         }
@@ -166,28 +199,28 @@ namespace App
 
         private void CloseTabCommand(object sender, EventArgs e)
         {
-            if (this.contextTabPage == null)
-                this.contextTabPage = filesTabControl.SelectedTab;
+            if (this._contextTabPage == null)
+                this._contextTabPage = filesTabControl.SelectedTab;
 
-            editingTabList[this.contextTabPage].Close();
-            if (!filesTabControl.TabPages.Contains(this.contextTabPage))
-                editingTabList.Remove(this.contextTabPage);
-            this.contextTabPage = null;
+            _editingTabList[this._contextTabPage].Close();
+            if (!filesTabControl.TabPages.Contains(this._contextTabPage))
+                _editingTabList.Remove(this._contextTabPage);
+            this._contextTabPage = null;
         }
 
         private void FileSaveCommand(object sender, EventArgs e)
         {
-            if (this.contextTabPage == null)
-                this.contextTabPage = filesTabControl.SelectedTab;
+            if (this._contextTabPage == null)
+                this._contextTabPage = filesTabControl.SelectedTab;
 
-            editingTabList[this.contextTabPage].Save();
+            _editingTabList[this._contextTabPage].Save();
 
         }
 
         private void QueryWindowForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Dictionary<TabPage, EditingTabController> newlist = new Dictionary<TabPage, EditingTabController>(this.editingTabList);
-            foreach (KeyValuePair<TabPage,EditingTabController> pair in editingTabList)
+            Dictionary<TabPage, EditingTabController> newlist = new Dictionary<TabPage, EditingTabController>(this._editingTabList);
+            foreach (KeyValuePair<TabPage,EditingTabController> pair in _editingTabList)
             {
                 pair.Value.Close();
                 if (filesTabControl.TabPages.Contains(pair.Key))
@@ -195,14 +228,14 @@ namespace App
                 newlist.Remove(pair.Key);
             }
 
-            this.editingTabList = newlist;
-            if (this.editingTabList.Count != 0)
+            this._editingTabList = newlist;
+            if (this._editingTabList.Count != 0)
                 e.Cancel = true;
         }
 
         private void executeToolStripButton_Click(object sender, EventArgs e)
         {
-            _execController.ExecuteAsync(editingTabList[filesTabControl.SelectedTab].Statement);
+            _execController.ExecuteAsync(_editingTabList[filesTabControl.SelectedTab].Statement);
         }
 
     }
