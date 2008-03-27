@@ -2,4 +2,6 @@ User settings saved on %LOCALAPPDATA%
 For example
 	C:\Users\user_name\AppData\Local\QueryTool2\...
 	
-	
+
+Conexió de prova:
+	Data Source=(local);Initial Catalog=AdventureWorks;Integrated Security=True
