@@ -9,14 +9,14 @@ namespace App
 {
     class StatementExecutionController
     {
-        private BackgroundWorker2 execWorker = new App.BackgroundWorker2();
+        private BackgroundWorker2 _execWorker = new App.BackgroundWorker2();
 
         public StatementExecutionController()
         {
-            execWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(execWorker_DoWork);
-            execWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(execWorker_RunWorkerCompleted);
-            execWorker.WorkerReportsProgress = true;
-            execWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(execWorker_ProgressChanged);
+            _execWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(execWorker_DoWork);
+            _execWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(execWorker_RunWorkerCompleted);
+            _execWorker.WorkerReportsProgress = true;
+            _execWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(execWorker_ProgressChanged);
         }
 
         IDbConnection _connection;
@@ -53,8 +53,21 @@ namespace App
             _commandTimeout = My.Settings.CommandTimeout;
             _dataset = new DataSet();
 
-            execWorker.RunWorkerAsync();
+            _execWorker.RunWorkerAsync();
 
+        }
+
+        public void Cancel()
+        {
+            //try Cancel
+        }
+
+        public void Abort()
+        {
+            _execWorker.Abort();
+            _connection = null;
+            if (End != null)
+                End.Invoke();
         }
 
         protected DataTable BuildDataTable(string tablename, DataTable schema)
@@ -91,7 +104,7 @@ namespace App
             cmd.CommandText = _stm;
             cmd.Connection = _connection;
             IDataReader r = cmd.ExecuteReader(CommandBehavior.Default);
-            execWorker.ReportProgress(0, "ReaderExecuted");
+            _execWorker.ReportProgress(0, "ReaderExecuted");
             do
             {
                 DataTable schematable = r.GetSchemaTable();
@@ -99,8 +112,8 @@ namespace App
                 ExecuteNewResultEventArgs ee = new ExecuteNewResultEventArgs();
                 ee.Schema = schematable;
                 ee.Data = table;
-                execWorker.ReportProgress(1, ee);
-                
+                _execWorker.ReportProgress(1, ee);
+
                 while (r.Read())
                 {
                     object[] values = new object[r.FieldCount];
@@ -111,7 +124,7 @@ namespace App
                     }
                 }
 
-                execWorker.ReportProgress(2, "ReaderExecuted");
+                _execWorker.ReportProgress(2, "ReaderExecuted");
             }
             while (r.NextResult());
             r.Close();
@@ -142,7 +155,8 @@ namespace App
             if (e.Error != null)
                 throw e.Error;
 
-            End.Invoke();
+            if (End != null)
+                End.Invoke();
         }
 
         public void RunAsistedAsync(string stm)

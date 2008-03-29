@@ -15,13 +15,10 @@ namespace App
     {
         Dictionary<TabPage, EditingTabController> _editingTabList = new Dictionary<TabPage, EditingTabController>();
         TabPage _contextTabPage = null;
-        StatementExecutionController _execController = new StatementExecutionController();
 
         public QueryWindowForm()
         {
             InitializeComponent();
-            _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
-            _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
             filesTabControl.Selected += new TabControlEventHandler(filesTabControl_Selected);
             filesTabControl.Deselected += new TabControlEventHandler(filesTabControl_Deselected);
             toolStripRowCount.Text = "";
@@ -32,7 +29,8 @@ namespace App
             if (e.TabPage == null) return;
             EditingTabController cont = _editingTabList[e.TabPage];
             if (cont == null) return;
-            cont.RowCountChange -= new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
+            WinForms.DisableRestore(cont.EnabledState);
+            UnBindActiveTabEvents(cont);
         }
 
         void filesTabControl_Selected(object sender, TabControlEventArgs e)
@@ -40,30 +38,8 @@ namespace App
             if (e.TabPage == null) return;
             EditingTabController cont = _editingTabList[e.TabPage];
             if (cont == null) return;
-            cont.RowCountChange += new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
-        }
-
-        void QueryWindowForm_RowCountChange(int rowcount)
-        {
-            if (rowcount != -1)
-            {
-                if (toolStripStatusLabel1.Text == "toolStripStatusLabel1")
-                    toolStripStatusLabel1.Text = rowcount.ToString();
-                toolStripRowCount.Text = rowcount.ToString();
-            }
-            else
-                toolStripRowCount.Text = "";
-        }
-
-        EnabledState _enabledState;
-        void _execController_Start()
-        {
-
-        }
-
-        void _execController_End()
-        {
-
+            WinForms.DisableAgain(cont.EnabledState);
+            BindActiveTabEvents(cont);
         }
 
         private void QueryWindowForm_Load(object sender, EventArgs e)
@@ -76,7 +52,51 @@ namespace App
 
             FileNewCommand(null, null);
             EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            BindActiveTabEvents(cont);
+        }
+
+        void BindActiveTabEvents(EditingTabController cont)
+        {
+            if (cont == null) return;
             cont.RowCountChange += new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
+            cont.ExecController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
+            cont.ExecController.End += new StatementExecutionController.EndDelegate(_execController_End);
+        }
+
+        void UnBindActiveTabEvents(EditingTabController cont)
+        {
+            if (cont == null) return;
+            cont.RowCountChange -= new EditingTabController.RowCountChangeDelegate(QueryWindowForm_RowCountChange);
+            cont.ExecController.Start -= new StatementExecutionController.StartDelegate(_execController_Start);
+            cont.ExecController.End -= new StatementExecutionController.EndDelegate(_execController_End);
+        }
+
+        void QueryWindowForm_RowCountChange(int rowcount, bool loading)
+        {
+            if (rowcount != -1)
+            {
+                if (loading)
+                    toolStripRowCount.Text = "... ";
+                toolStripRowCount.Text = rowcount.ToString();
+            }
+            else
+                toolStripRowCount.Text = "";
+        }
+
+
+        void _execController_Start()
+        {
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            WinForms.Disable(connectCoolStripButton, cont.EnabledState);
+            WinForms.Disable(executeToolStripButton, cont.EnabledState);
+            WinForms.Enable(cancelToolStripButton, cont.EnabledState);
+        }
+
+        void _execController_End()
+        {
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            WinForms.DisableRestore(cont.EnabledState);
+            cont.EnabledState.Clear();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -101,8 +121,8 @@ namespace App
             {
                 if (_editingTabList.Count == 0)
                     FileNewCommand();
-                _execController.Connection = f.Connection.OpenConnection;
                 EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+                cont.ExecController.Connection = f.Connection.OpenConnection;
                 cont.Connection = f.Connection;
                 cont.UpdateTabTitle();
             }
@@ -127,7 +147,6 @@ namespace App
         {
             EditingTabController c = new EditingTabController();
             c.FileName = null;
-            c.ExecController = _execController;
             TabPage tab = c.Tab;
             tab.Text = SR.NewFile + (filesTabControl.TabPages.Count + 1);
             filesTabControl.TabPages.Add(tab);
@@ -235,7 +254,20 @@ namespace App
 
         private void executeToolStripButton_Click(object sender, EventArgs e)
         {
-            _execController.ExecuteAsync(_editingTabList[filesTabControl.SelectedTab].Statement);
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+
+            if (cont.ExecController.Connection == null || cont.ExecController.Connection.State == ConnectionState.Closed)
+                ConnectCommand(null, null);
+            if (cont.ExecController.Connection == null || cont.ExecController.Connection.State == ConnectionState.Closed)
+                return;
+            cont.ExecController.ExecuteAsync(_editingTabList[filesTabControl.SelectedTab].Statement);
+        }
+
+        private void cancelToolStripButton_Click(object sender, EventArgs e)
+        {
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+
+            cont.ExecController.Abort();
         }
 
     }

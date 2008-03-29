@@ -76,7 +76,7 @@ namespace App
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectCoolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.executeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.cancelToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +85,7 @@ namespace App
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.copyFullPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -408,7 +409,8 @@ namespace App
             this.pasteToolStripButton,
             this.toolStripSeparator1,
             this.connectCoolStripButton,
-            this.executeToolStripButton});
+            this.executeToolStripButton,
+            this.cancelToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(674, 25);
@@ -500,15 +502,16 @@ namespace App
             this.connectCoolStripButton.Text = "Connect";
             this.connectCoolStripButton.Click += new System.EventHandler(this.ConnectCommand);
             // 
-            // executeToolStripButton
+            // cancelToolStripButton
             // 
-            this.executeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.executeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("executeToolStripButton.Image")));
-            this.executeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.executeToolStripButton.Name = "executeToolStripButton";
-            this.executeToolStripButton.Size = new System.Drawing.Size(51, 22);
-            this.executeToolStripButton.Text = "Execute";
-            this.executeToolStripButton.Click += new System.EventHandler(this.executeToolStripButton_Click);
+            this.cancelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.cancelToolStripButton.Enabled = false;
+            this.cancelToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelToolStripButton.Image")));
+            this.cancelToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cancelToolStripButton.Name = "cancelToolStripButton";
+            this.cancelToolStripButton.Size = new System.Drawing.Size(47, 22);
+            this.cancelToolStripButton.Text = "Cancel";
+            this.cancelToolStripButton.Click += new System.EventHandler(this.cancelToolStripButton_Click);
             // 
             // openFileDialog1
             // 
@@ -564,6 +567,16 @@ namespace App
             this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
             this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing &Folder";
+            // 
+            // executeToolStripButton
+            // 
+            this.executeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.executeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("executeToolStripButton.Image")));
+            this.executeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.executeToolStripButton.Name = "executeToolStripButton";
+            this.executeToolStripButton.Size = new System.Drawing.Size(51, 22);
+            this.executeToolStripButton.Text = "Execute";
+            this.executeToolStripButton.Click += new System.EventHandler(this.executeToolStripButton_Click);
             // 
             // QueryWindowForm
             // 
@@ -651,8 +664,9 @@ namespace App
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem copyFullPathToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openContainingFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton executeToolStripButton;
+        private System.Windows.Forms.ToolStripButton cancelToolStripButton;
         private System.Windows.Forms.ToolStripButton connectCoolStripButton;
         private System.Windows.Forms.ToolStripStatusLabel toolStripRowCount;
+        private System.Windows.Forms.ToolStripButton executeToolStripButton;
     }
 }

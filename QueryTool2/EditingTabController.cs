@@ -18,24 +18,45 @@ namespace App
         TabTitleStyleEnum tabTitleStyle = TabTitleStyleEnum.FileName | TabTitleStyleEnum.Server | TabTitleStyleEnum.Database;
         StatementExecutionController _execController = new StatementExecutionController();
 
-        public delegate void RowCountChangeDelegate(int rowcount);
+        public delegate void RowCountChangeDelegate(int rowcount,bool loading);
         public event RowCountChangeDelegate RowCountChange;
+
+        EnabledState _enabledState = new EnabledState();
+
+        public EditingTabController()
+        {
+            InitializeComponent();
+
+            splitContainer1.Dock = DockStyle.Fill;
+            resultsTabControl.Dock = DockStyle.Fill;
+            textEditorControl1.Dock = DockStyle.Fill;
+
+            string appPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            HighlightingManager.Manager.AddSyntaxModeFileProvider(new FileSyntaxModeProvider(appPath));
+
+            textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("LOGPARSER");
+            textEditorControl1.ShowEOLMarkers = false;
+            textEditorControl1.Document.DocumentChanged += new DocumentEventHandler(Document_DocumentChanged);
+            textEditorControl1.Document.UndoStack.ActionUndone += new EventHandler(UndoStack_Action);
+            textEditorControl1.Document.UndoStack.ActionRedone += new EventHandler(UndoStack_Action);
+
+            resultsTabControl.TabPages.Clear();
+            _execController = new StatementExecutionController();
+            _execController.ExecuteAsyncNewResult += new StatementExecutionController.ExecuteAsyncNewResultDelegate(_execController_ExecuteAsyncNewResult);
+            _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
+            _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
+            _execController.ExecuteAsyncRowFetchComplete += new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
+            CreateGridTab();
+        }
+
+        public EnabledState EnabledState
+        {
+            get { return _enabledState; }
+        }
 
         internal StatementExecutionController ExecController
         {
             get { return _execController; }
-            set 
-            { 
-                _execController = value;
-                _execController.ExecuteAsyncNewResult -= new StatementExecutionController.ExecuteAsyncNewResultDelegate(_execController_ExecuteAsyncNewResult);
-                _execController.ExecuteAsyncNewResult += new StatementExecutionController.ExecuteAsyncNewResultDelegate(_execController_ExecuteAsyncNewResult);
-                _execController.Start -= new StatementExecutionController.StartDelegate(_execController_Start);
-                _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
-                _execController.End -= new StatementExecutionController.EndDelegate(_execController_End);
-                _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
-                _execController.ExecuteAsyncRowFetchComplete -= new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
-                _execController.ExecuteAsyncRowFetchComplete += new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
-            }
         }
 
 
@@ -87,27 +108,6 @@ namespace App
         public string Statement
         {
             get { return textEditorControl1.Text; }
-        }
-
-        public EditingTabController()
-        {
-            InitializeComponent();
-
-            splitContainer1.Dock = DockStyle.Fill;
-            resultsTabControl.Dock = DockStyle.Fill;
-            textEditorControl1.Dock = DockStyle.Fill;
-
-            string appPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            HighlightingManager.Manager.AddSyntaxModeFileProvider(new FileSyntaxModeProvider(appPath));
-
-            textEditorControl1.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("LOGPARSER");
-            textEditorControl1.ShowEOLMarkers = false;
-            textEditorControl1.Document.DocumentChanged += new DocumentEventHandler(Document_DocumentChanged);
-            textEditorControl1.Document.UndoStack.ActionUndone += new EventHandler(UndoStack_Action);
-            textEditorControl1.Document.UndoStack.ActionRedone +=new EventHandler(UndoStack_Action);
-
-            resultsTabControl.TabPages.Clear();
-            CreateGridTab();
         }
 
         void _execController_Start()
@@ -223,6 +223,7 @@ namespace App
         {
             TabPage page = new TabPage("Resultset " + _resultsCount + 1);
             TabControl dataAndSchema = new TabControl();
+            dataAndSchema.Selected += new TabControlEventHandler(dataAndSchema_Selected);
             dataAndSchema.Dock = DockStyle.Fill;
             TabPage data = new TabPage("Data");
             data.Name = "dataTabPage";
@@ -240,6 +241,16 @@ namespace App
             page.Controls.Add(dataAndSchema);
             resultsTabControl.TabPages.Add(page);
             dataAndSchema.SelectedTab = data;
+        }
+
+        void dataAndSchema_Selected(object sender, TabControlEventArgs e)
+        {
+            int rowcount = -1;
+            DataTable t = VisibleDataTable;
+            if (t != null)
+                rowcount = t.Rows.Count;
+            if (RowCountChange != null)
+                RowCountChange.Invoke(rowcount, VisibleDataTable == _loadingDataTable);
         }
 
         void grid_DoubleClick(object sender, EventArgs e)
@@ -280,6 +291,8 @@ namespace App
             resultsTabControl.TabPages.Add(page);
         }
 
+        DataTable _loadingDataTable = null;
+
         void _execController_ExecuteAsyncNewResult(StatementExecutionController.ExecuteNewResultEventArgs e)
         {
             CreateGridTab();
@@ -301,10 +314,12 @@ namespace App
             schgrid.DataSource = e.Schema;
 
             grid.PagedDataSource = e.Data;
+            _loadingDataTable = e.Data;
         }
 
         void _execController_ExecuteAsyncRowFetchComplete()
         {
+            _loadingDataTable = null;
             timerRowCount_Tick(null, null);
             PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
             grid.PageNeeded -= new PagedGridView.PageNeededDelegate(grid_PageNeeded);
@@ -316,8 +331,8 @@ namespace App
             int rowcount = -1;
             lock (_execController.DataSet)
             {
-                if (VisibleDataTable != null)
-                    rowcount = VisibleDataTable.Rows.Count;
+                if (_loadingDataTable != null)
+                    rowcount = _loadingDataTable.Rows.Count;
             }
 
             PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
@@ -327,15 +342,15 @@ namespace App
 
             grid.PageNeeded += new PagedGridView.PageNeededDelegate(grid_PageNeeded);
 
-            if (VisibleDataTable != null)
+            if (_loadingDataTable != null && VisibleDataTable == _loadingDataTable)
             {
                 if (RowCountChange != null)
-                    RowCountChange.Invoke(rowcount);
+                    RowCountChange.Invoke(rowcount, VisibleDataTable == _loadingDataTable);
             }
             else
             {
                 if (RowCountChange != null)
-                    RowCountChange.Invoke(-1);
+                    RowCountChange.Invoke(-1,false);
             }
         }
 
@@ -344,8 +359,8 @@ namespace App
             int rowcount = -1;
             lock (_execController.DataSet)
             {
-                if (VisibleDataTable != null)
-                    rowcount = VisibleDataTable.Rows.Count;
+                if (_loadingDataTable != null)
+                    rowcount = _loadingDataTable.Rows.Count;
             }
 
             PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);

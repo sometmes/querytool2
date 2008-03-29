@@ -22,6 +22,11 @@ namespace App
     {
         private Thread mThread;
 
+        public BackgroundWorker2()
+        {
+            WorkerSupportsCancellation = true;
+        }
+
         protected override void OnProgressChanged(ProgressChangedEventArgs e)
         {
             if (threadAborted)

@@ -32,23 +32,28 @@
 	2-  Asynchronousy retrieve and show results on the datagrid. Allow cancellation.
 		Does not allow sort.
 		Using adonet sybase provider you will not see any row until the full resultset
-		is retrieved (due to base dblib). So is adviced to use - 1.- to issue a 
+		is retrieved (due to base dblib). So is adviced to use ( 1.) to issue a 
 		'set rowcount' to limit resultset length.
 		Using MsSql provider, you will see records appearing quickly, and being 
-		downloaded util reached the end of the resultsed or user-canceled.
+		downloaded util reached the end of the resultset or user-canceled.
+		When entering edit mode for ant cell or select "Schema with keys" tab,
+		query is executed again using CommandBehavior.WithKey, but without returning
+		any rows.
 
 3.	Modes of execution
 	There is only one query editing pane. the mode of execution is determined by how
 	the sql is executed. Ctrl-E runs in custom mode and Ctrl-R in assisted mode.
 	The mode of execution determines the behaviour of the results grid.
-	In Custom mode, the grid is read-only and headers are user to select the entire
-	column.
-	In Assisted mode, the grid is editable. Headers are used to re-run the query
-	with sort, and an aditional band is shown above the results grid with IU to help
-	add filters to the query and change primary key columns, read-only and
-	send-with-updates columns. Also column order can be changed and is remembered
-	between executions for same base table combinations. Hide a column just sends it to
-	the end of the column list and shows in grayed colour.
+	In Custom mode, the grid cannot be sorted or paged, and headers are used to select
+	the entire column. But it is editable, an aditional band is shown above the results 
+	grid with IU to change primary key columns, read-only, hidden and send-with-updates
+	columns. These changes are remembered between executions for same base table 
+	combinations. Hide a column just sends it to the end of the column list and shows 
+	in grayed colour.
+	In Assisted mode the grid is also editable. Headers are used to re-run the query
+	with sort, and the band above the results grid also allows to add filters to the
+	query. Column order is remembered as does key columns,etc in Custom mode.
+	
 	
 	Assisted:
 		Only works for 'select' statements, update delete and more complex sql scripts
@@ -58,18 +63,18 @@
 		This outer statement is responsible of the paging and sorting functionality.
 		Is executed with Ctrl+R.
 		
-		- 1.- is algo honored in this mode.
+		( 1.) is algo honored in this mode.
 	Custom:
 		The sql statement typed by the user is passed to the provider and executed 
 		as-is (CommandBehavior.Default).
-		In this mode is useful - 1.- and -2.2- (if correctly implemented by the 
+		In this mode is useful ( 1.) and (2.2) (if correctly implemented by the 
 		provider)
-		-2.1- is only applicable in Assisted mode.
+		(2.1) is only applicable in Assisted mode.
 		Is executed with Ctrl+E.
 		
 4.	Editable grid
-	In addition of paging sorting and filtering, the results grid in Assisted mode
-	can be edited.
+	In addition of paging sorting and filtering, the results grid in Custom and Assisted
+	mode can be edited.
 
 	Although the grid is run in virtual mode, an underling dataset exists to mantain
 	row values and to keed track of the changes.
@@ -118,4 +123,5 @@
 	assisted mode. Also base table info is shown to help user select the appropiate tab.
 	With this functionality, some master-detail behaviour is offered.
 	
+5.	SQL Formatter
 	

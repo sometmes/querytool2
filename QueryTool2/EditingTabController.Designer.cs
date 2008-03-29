@@ -104,7 +104,7 @@ namespace App
             // 
             this.splitContainer1.Panel2.Controls.Add(this.resultsTabControl);
             this.splitContainer1.Size = new System.Drawing.Size(359, 260);
-            this.splitContainer1.SplitterDistance = 162;
+            this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 0;
             // 
             // textEditorControl1
