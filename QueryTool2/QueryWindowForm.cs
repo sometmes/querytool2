@@ -89,7 +89,10 @@ namespace App
             EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
             WinForms.Disable(connectCoolStripButton, cont.EnabledState);
             WinForms.Disable(executeToolStripButton, cont.EnabledState);
+            WinForms.Disable(executeQueryToolStripMenuItem, cont.EnabledState);
             WinForms.Enable(cancelToolStripButton, cont.EnabledState);
+            WinForms.Enable(cancelToolStripMenuItem, cont.EnabledState);
+            toolStripStatusLabel2.Text = "Executing";
         }
 
         void _execController_End()
@@ -97,6 +100,7 @@ namespace App
             EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
             WinForms.DisableRestore(cont.EnabledState);
             cont.EnabledState.Clear();
+            toolStripStatusLabel2.Text = "Finished";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -114,18 +118,23 @@ namespace App
             
         }
 
-        private void ConnectCommand(object sender, EventArgs e)
+        void Connect(EditingTabController cont)
         {
             NewConnectionForm f = new NewConnectionForm();
             if (DialogResult.OK == f.ShowDialog())
             {
                 if (_editingTabList.Count == 0)
                     FileNewCommand();
-                EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
                 cont.ExecController.Connection = f.Connection.OpenConnection;
                 cont.Connection = f.Connection;
                 cont.UpdateTabTitle();
             }
+        }
+
+        private void ConnectCommand(object sender, EventArgs e)
+        {
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            Connect(cont);
         }
 
         private void splitContainer3_DoubleClick(object sender, EventArgs e)
@@ -252,7 +261,7 @@ namespace App
                 e.Cancel = true;
         }
 
-        private void executeToolStripButton_Click(object sender, EventArgs e)
+        private void executeQueryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
 
@@ -260,14 +269,25 @@ namespace App
                 ConnectCommand(null, null);
             if (cont.ExecController.Connection == null || cont.ExecController.Connection.State == ConnectionState.Closed)
                 return;
-            cont.ExecController.ExecuteAsync(_editingTabList[filesTabControl.SelectedTab].Statement);
+            cont.ExecController.ExecuteAsync(cont.Statement);
         }
 
-        private void cancelToolStripButton_Click(object sender, EventArgs e)
+        private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
-
             cont.ExecController.Abort();
+            toolStripStatusLabel2.Text = "Canceled";
+        }
+
+        private void QueryWindowForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (cancelToolStripButton.Enabled == true)
+                {
+                    cancelToolStripMenuItem_Click(null, null);
+                }
+            }
         }
 
     }

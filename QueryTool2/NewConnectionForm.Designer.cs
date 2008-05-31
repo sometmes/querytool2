@@ -58,7 +58,7 @@ namespace App
             this.changeProvider2.Location = new System.Drawing.Point(240, 25);
             this.changeProvider2.Name = "changeProvider2";
             this.changeProvider2.Size = new System.Drawing.Size(75, 23);
-            this.changeProvider2.TabIndex = 2;
+            this.changeProvider2.TabIndex = 1;
             this.changeProvider2.Text = "Change...";
             this.changeProvider2.UseVisualStyleBackColor = true;
             this.changeProvider2.Click += new System.EventHandler(this.changeProvider2_Click);
@@ -78,7 +78,7 @@ namespace App
             this.changeProvider1.Location = new System.Drawing.Point(240, 79);
             this.changeProvider1.Name = "changeProvider1";
             this.changeProvider1.Size = new System.Drawing.Size(75, 23);
-            this.changeProvider1.TabIndex = 2;
+            this.changeProvider1.TabIndex = 3;
             this.changeProvider1.Text = "Change...";
             this.changeProvider1.UseVisualStyleBackColor = true;
             // 
@@ -90,7 +90,7 @@ namespace App
             this.SimpleEditGroupBox.Location = new System.Drawing.Point(12, 112);
             this.SimpleEditGroupBox.Name = "SimpleEditGroupBox";
             this.SimpleEditGroupBox.Size = new System.Drawing.Size(303, 123);
-            this.SimpleEditGroupBox.TabIndex = 3;
+            this.SimpleEditGroupBox.TabIndex = 4;
             this.SimpleEditGroupBox.TabStop = false;
             this.SimpleEditGroupBox.Text = "Configure provider";
             // 
@@ -101,7 +101,7 @@ namespace App
             this.testConnection.Location = new System.Drawing.Point(326, 212);
             this.testConnection.Name = "testConnection";
             this.testConnection.Size = new System.Drawing.Size(95, 23);
-            this.testConnection.TabIndex = 5;
+            this.testConnection.TabIndex = 6;
             this.testConnection.Text = "Test Connection";
             this.testConnection.UseVisualStyleBackColor = true;
             this.testConnection.Click += new System.EventHandler(this.testConnection_Click);
@@ -113,7 +113,7 @@ namespace App
             this.connectButton.Location = new System.Drawing.Point(346, 25);
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(75, 23);
-            this.connectButton.TabIndex = 5;
+            this.connectButton.TabIndex = 7;
             this.connectButton.Text = "Connect";
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.acceptButton_Click);
@@ -126,7 +126,7 @@ namespace App
             this.cancelButton.Location = new System.Drawing.Point(346, 53);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 5;
+            this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -137,7 +137,7 @@ namespace App
             this.advancedButton.Location = new System.Drawing.Point(346, 183);
             this.advancedButton.Name = "advancedButton";
             this.advancedButton.Size = new System.Drawing.Size(75, 23);
-            this.advancedButton.TabIndex = 6;
+            this.advancedButton.TabIndex = 5;
             this.advancedButton.Text = "Advanced...";
             this.advancedButton.UseVisualStyleBackColor = true;
             this.advancedButton.Click += new System.EventHandler(this.advancedButton_Click);
@@ -150,7 +150,7 @@ namespace App
             this.provider2Textbox.Name = "provider2Textbox";
             this.provider2Textbox.ReadOnly = true;
             this.provider2Textbox.Size = new System.Drawing.Size(222, 20);
-            this.provider2Textbox.TabIndex = 9;
+            this.provider2Textbox.TabIndex = 0;
             // 
             // provider1Textbox
             // 
@@ -160,7 +160,7 @@ namespace App
             this.provider1Textbox.Name = "provider1Textbox";
             this.provider1Textbox.ReadOnly = true;
             this.provider1Textbox.Size = new System.Drawing.Size(222, 20);
-            this.provider1Textbox.TabIndex = 10;
+            this.provider1Textbox.TabIndex = 2;
             // 
             // testConnectWorker
             // 
@@ -176,8 +176,10 @@ namespace App
             // 
             // NewConnectionForm
             // 
+            this.AcceptButton = this.connectButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(434, 247);
             this.Controls.Add(this.provider1Textbox);
             this.Controls.Add(this.provider2Textbox);

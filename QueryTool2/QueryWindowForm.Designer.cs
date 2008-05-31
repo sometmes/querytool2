@@ -56,11 +56,8 @@ namespace App
             this.viewConnectionPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.executeQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.retrieveUpdateCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.limitResultRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.dataCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.executeReaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeAssistedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +73,7 @@ namespace App
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.connectCoolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.executeToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.cancelToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -85,7 +83,7 @@ namespace App
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.copyFullPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.executeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -101,6 +99,7 @@ namespace App
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel2,
             this.toolStripStatusLabel1,
             this.toolStripRowCount});
             this.statusStrip1.Location = new System.Drawing.Point(0, 444);
@@ -111,9 +110,8 @@ namespace App
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(547, 19);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(398, 19);
             this.toolStripStatusLabel1.Spring = true;
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // toolStripRowCount
             // 
@@ -188,7 +186,6 @@ namespace App
             this.editToolStripMenuItem,
             this.connectionToolStripMenuItem,
             this.databaseToolStripMenuItem,
-            this.dataCommandToolStripMenuItem,
             this.windowToolStripMenuItem,
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -314,57 +311,33 @@ namespace App
             // 
             this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.executeQueryToolStripMenuItem,
-            this.retrieveUpdateCommandsToolStripMenuItem,
-            this.limitResultRowsToolStripMenuItem,
-            this.toolStripComboBox1});
+            this.executeAssistedToolStripMenuItem,
+            this.cancelToolStripMenuItem});
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
-            this.databaseToolStripMenuItem.Text = "Data adapter";
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.databaseToolStripMenuItem.Text = "E&xecution";
             // 
             // executeQueryToolStripMenuItem
             // 
             this.executeQueryToolStripMenuItem.Name = "executeQueryToolStripMenuItem";
-            this.executeQueryToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.executeQueryToolStripMenuItem.Text = "Fill dataset";
+            this.executeQueryToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.executeQueryToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.executeQueryToolStripMenuItem.Text = "Execute script";
+            this.executeQueryToolStripMenuItem.Click += new System.EventHandler(this.executeQueryToolStripMenuItem_Click);
             // 
-            // retrieveUpdateCommandsToolStripMenuItem
+            // executeAssistedToolStripMenuItem
             // 
-            this.retrieveUpdateCommandsToolStripMenuItem.Checked = true;
-            this.retrieveUpdateCommandsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.retrieveUpdateCommandsToolStripMenuItem.Name = "retrieveUpdateCommandsToolStripMenuItem";
-            this.retrieveUpdateCommandsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.retrieveUpdateCommandsToolStripMenuItem.Text = "Retrieve update commands";
+            this.executeAssistedToolStripMenuItem.Name = "executeAssistedToolStripMenuItem";
+            this.executeAssistedToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.executeAssistedToolStripMenuItem.Text = "Execute rowset";
             // 
-            // limitResultRowsToolStripMenuItem
+            // cancelToolStripMenuItem
             // 
-            this.limitResultRowsToolStripMenuItem.Checked = true;
-            this.limitResultRowsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.limitResultRowsToolStripMenuItem.Name = "limitResultRowsToolStripMenuItem";
-            this.limitResultRowsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.limitResultRowsToolStripMenuItem.Text = "Limit result rows";
-            // 
-            // toolStripComboBox1
-            // 
-            this.toolStripComboBox1.Items.AddRange(new object[] {
-            "10",
-            "100",
-            "500"});
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            // 
-            // dataCommandToolStripMenuItem
-            // 
-            this.dataCommandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.executeReaderToolStripMenuItem});
-            this.dataCommandToolStripMenuItem.Name = "dataCommandToolStripMenuItem";
-            this.dataCommandToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
-            this.dataCommandToolStripMenuItem.Text = "Data command";
-            // 
-            // executeReaderToolStripMenuItem
-            // 
-            this.executeReaderToolStripMenuItem.Name = "executeReaderToolStripMenuItem";
-            this.executeReaderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.executeReaderToolStripMenuItem.Text = "Execute reader";
+            this.cancelToolStripMenuItem.Enabled = false;
+            this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.cancelToolStripMenuItem.Text = "Cancel";
+            this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
             // windowToolStripMenuItem
             // 
@@ -502,6 +475,16 @@ namespace App
             this.connectCoolStripButton.Text = "Connect";
             this.connectCoolStripButton.Click += new System.EventHandler(this.ConnectCommand);
             // 
+            // executeToolStripButton
+            // 
+            this.executeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.executeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("executeToolStripButton.Image")));
+            this.executeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.executeToolStripButton.Name = "executeToolStripButton";
+            this.executeToolStripButton.Size = new System.Drawing.Size(51, 22);
+            this.executeToolStripButton.Text = "Execute";
+            this.executeToolStripButton.Click += new System.EventHandler(this.executeQueryToolStripMenuItem_Click);
+            // 
             // cancelToolStripButton
             // 
             this.cancelToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -511,7 +494,7 @@ namespace App
             this.cancelToolStripButton.Name = "cancelToolStripButton";
             this.cancelToolStripButton.Size = new System.Drawing.Size(47, 22);
             this.cancelToolStripButton.Text = "Cancel";
-            this.cancelToolStripButton.Click += new System.EventHandler(this.cancelToolStripButton_Click);
+            this.cancelToolStripButton.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -568,15 +551,11 @@ namespace App
             this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing &Folder";
             // 
-            // executeToolStripButton
+            // toolStripStatusLabel2
             // 
-            this.executeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.executeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("executeToolStripButton.Image")));
-            this.executeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.executeToolStripButton.Name = "executeToolStripButton";
-            this.executeToolStripButton.Size = new System.Drawing.Size(51, 22);
-            this.executeToolStripButton.Text = "Execute";
-            this.executeToolStripButton.Click += new System.EventHandler(this.executeToolStripButton_Click);
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 19);
+            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // QueryWindowForm
             // 
@@ -587,11 +566,13 @@ namespace App
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "QueryWindowForm";
             this.Text = "QueryWindowForm";
             this.Load += new System.EventHandler(this.QueryWindowForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.QueryWindowForm_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.QueryWindowForm_KeyDown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -620,14 +601,7 @@ namespace App
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem executeQueryToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripMenuItem dataCommandToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem executeReaderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem retrieveUpdateCommandsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem limitResultRowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.SplitContainer splitContainer3;
@@ -668,5 +642,10 @@ namespace App
         private System.Windows.Forms.ToolStripButton connectCoolStripButton;
         private System.Windows.Forms.ToolStripStatusLabel toolStripRowCount;
         private System.Windows.Forms.ToolStripButton executeToolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem executeQueryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem executeAssistedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

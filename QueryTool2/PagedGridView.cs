@@ -22,6 +22,8 @@ namespace App
         {
             VirtualMode = true;
             PageSize = 100;
+            RowHeadersWidth = 15;
+            RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         }
 
         public int PageSize

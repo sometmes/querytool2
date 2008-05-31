@@ -39,6 +39,9 @@ namespace App
             textEditorControl1.Document.DocumentChanged += new DocumentEventHandler(Document_DocumentChanged);
             textEditorControl1.Document.UndoStack.ActionUndone += new EventHandler(UndoStack_Action);
             textEditorControl1.Document.UndoStack.ActionRedone += new EventHandler(UndoStack_Action);
+            textEditorControl1.ActiveTextAreaControl.TextArea.KeyPress += new KeyPressEventHandler(TextArea_KeyPress);
+            textEditorControl1.ActiveTextAreaControl.TextArea.KeyDown += new KeyEventHandler(TextArea_KeyDown);
+            
 
             resultsTabControl.TabPages.Clear();
             _execController = new StatementExecutionController();
@@ -47,6 +50,16 @@ namespace App
             _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
             _execController.ExecuteAsyncRowFetchComplete += new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
             CreateGridTab();
+        }
+
+        void TextArea_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        void TextArea_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
         }
 
         public EnabledState EnabledState
