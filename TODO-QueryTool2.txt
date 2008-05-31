@@ -20,25 +20,27 @@
 2.	Plugin associated to each provider that implements one or more supported
 	techniques to handle large resultsets.
 	1-	Paging and sorting
-		On SqlServer and Sybase, enclose a inner select statement into an outer 
+		On SqlServer and Sybase, enclose inner select statement into an outer 
 		select statement to get the inner statement sorted and filtered
 		through datagrid.
 		On sybase setrowcount is used to limit rowset length, and is incremented to
 		reach following pages (Yes, each page is more costly to retrieve than the 
 		previous but that's sybase :-(
-		On MsSql, an ExecuteReader with SchemaOnly is first issued to retrieve
-		keys and base table information. Then ExecuteReader is executed again with
-		ROW_NUMBER() OVER (primary_key ASC)
+		On MsSql, a "SELECT TOP ... ORDER BY primary_key" query is issued to 
+		retrieve initial page of data and keys and base table information. 
+		Then when the user requests another page, a "SELECT ... ROW_NUMBER() 
+		OVER (primary_key ASC)" is executed to retreive the rest of the pages.
 	2-  Asynchronousy retrieve and show results on the datagrid. Allow cancellation.
-		Does not allow sort.
-		Using adonet sybase provider you will not see any row until the full resultset
-		is retrieved (due to base dblib). So is adviced to use ( 1.) to issue a 
-		'set rowcount' to limit resultset length.
-		Using MsSql provider, you will see records appearing quickly, and being 
-		downloaded util reached the end of the resultset or user-canceled.
-		When entering edit mode for ant cell or select "Schema with keys" tab,
-		query is executed again using CommandBehavior.WithKey, but without returning
-		any rows.
+		Does not allow sort ¿and filter? 
+		a.  Using adonet sybase provider you will not see any row until the full 
+			resultset is retrieved. So is adviced to use ( 1.) to issue a 'set 
+			rowcount' to limit resultset length. Sybase Odbc driver does not have
+			this problem. 
+			Using MsSql provider, you will see records appearing quickly, and being 
+			downloaded util reached the end of the resultset or user-canceled.
+		b.  When entering edit mode for any cell or select "Schema with keys" tab,
+			query is executed again using CommandBehavior.WithKey, but without 
+			returning any rows.
 
 3.	Modes of execution
 	There is only one query editing pane. the mode of execution is determined by how
@@ -76,9 +78,8 @@
 	In addition of paging sorting and filtering, the results grid in Custom and Assisted
 	mode can be edited.
 
-	Although the grid is run in virtual mode, an underling dataset exists to mantain
-	row values and to keed track of the changes.
-	When updating, GetChanges in called on the dataset and send to a DataAdapter.
+	Although the grid is run in virtual mode, an underling dataset exists to keep track 
+	of the changes.	When updating, the dataset is send to a DataAdapter.
 	
 	Insert, update and delete statements are not build using regular CommandBuilder
 	instead, a custom routine implemented as a plugin for the provider is used to
@@ -95,28 +96,28 @@
 	'update mode'
 		All loaded rows are cleared but not recorded as deletes.
 		New rows can be pasted or inserted and filled manually but are allways send
-		to the provider as updates. If update fails, row are inserted.
+		to the provider as updates. If update fails, rows are inserted.
 	'delete mode'
 		Is similar to 'update mode' but all visible rows are deleted from the base
 		table when updated to the provider.
 	
 	Special support is implemented for columns of type 'object' (for sql_variant
 	columns, for example) when edited, the modified text is coherted to the existing 
-	real type. Is cohertion fails value is not modified.
+	real type. If cohertion fails value is not modified.
 	A combo box is provided for the user to choose a datatype (this is only allowed 
 	for object datatype columns).
 	
-	Columns can be copied and pasted. When copied, QueryTool2-native, raw text, 
-	excel compatible, and html versions are inserted to the clipboard.
+	Cells, rows and columns can be copied and pasted. When copied, QueryTool2-native, 
+	raw text, excel compatible, and html versions are inserted to the clipboard.
 	
 	When pasting, full rows are inserted at the end. If instead of rows, a group of
 	cells have been copied, they can be pasted on existing rows. In this mode, when
 	pasting first selected area changes color and is adjusted to match copied area. If
 	pasted again then values are put.
 	
-	Allways, changes are only sent to the database when update button is pressed.
+	Always, changes are only sent to the database when update button is pressed.
 	
-	Undo - redo support is implemented for the modifications on the grid.
+	Changes made on data in the grid can be discarted if not commited to de database.
 	
 	A context menú allows to select one or more rows and 'use to filter another tab ...'
 	When selected, a window is shown with the names of the tabs with result grids in
@@ -124,4 +125,8 @@
 	With this functionality, some master-detail behaviour is offered.
 	
 5.	SQL Formatter
+	Use the web-service at http://www.gudusoft.com/ to format selected text on
+	editing pane.
+	Provider must specify dbvendor. url and ftmopts Will be hard-coded by now.
+	
 	
