@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Data;
 
 namespace App
 {
@@ -17,6 +18,8 @@ namespace App
 
         public delegate void PageNeededDelegate(int rowIndex, int pageSize);
         public event PageNeededDelegate PageNeeded;
+
+        DataSet _changes = new DataSet();
 
         public PagedGridView()
         {

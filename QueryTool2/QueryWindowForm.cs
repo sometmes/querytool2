@@ -22,6 +22,7 @@ namespace App
             filesTabControl.Selected += new TabControlEventHandler(filesTabControl_Selected);
             filesTabControl.Deselected += new TabControlEventHandler(filesTabControl_Deselected);
             toolStripRowCount.Text = "";
+            toolStripStatusLabel2.Text = "";
         }
 
         void filesTabControl_Deselected(object sender, TabControlEventArgs e)
@@ -288,6 +289,12 @@ namespace App
                     cancelToolStripMenuItem_Click(null, null);
                 }
             }
+        }
+
+        private void switchPaneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            cont.SwitchPane();
         }
 
     }

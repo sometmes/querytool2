@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace App
@@ -49,7 +48,7 @@ namespace App
 
             _stm = stm;
             //_stm = "select * from AdventureWorks.Person.AddressType";
-            _stm = "select * from AdventureWorks.Production.WorkOrder";
+            //_stm = "select * from AdventureWorks.Production.WorkOrder";
             _commandTimeout = My.Settings.CommandTimeout;
             _dataset = new DataSet();
 

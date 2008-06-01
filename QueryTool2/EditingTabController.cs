@@ -49,6 +49,12 @@ namespace App
             _execController.Start += new StatementExecutionController.StartDelegate(_execController_Start);
             _execController.End += new StatementExecutionController.EndDelegate(_execController_End);
             _execController.ExecuteAsyncRowFetchComplete += new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
+
+            textEditorControl1.Text = @"
+--select * from AdventureWorks.Person.AddressType
+select * from AdventureWorks.Production.WorkOrder
+";
+
             CreateGridTab();
         }
 
@@ -120,13 +126,20 @@ namespace App
 
         public string Statement
         {
-            get { return textEditorControl1.Text; }
+            get 
+            {
+                string sel = "";
+                sel = textEditorControl1.ActiveTextAreaControl.SelectionManager.SelectedText;
+                if (string.IsNullOrEmpty(sel))
+                    sel = textEditorControl1.Text;
+                return sel;
+            }
         }
 
         void _execController_Start()
         {
             resultsTabControl.TabPages.Clear();
-            _resultsCount = 0;
+            _resultsCount = -1;
         }
 
         void _execController_End()
@@ -226,15 +239,33 @@ namespace App
         {
         }
 
+        public void SwitchPane()
+        {
+            if (textEditorControl1.ActiveTextAreaControl.TextArea.Focused == true)
+            {
+                TabPage gridTab = resultsTabControl.SelectedTab;
+                if (gridTab == null) return;
+                TabControl tc = gridTab.Controls[0] as TabControl;
+                TabPage page = tc.SelectedTab;
+                if (page == null) return;
+                Control grid = page.Controls[0];
+                grid.Focus();
+            }
+            else
+            {
+                textEditorControl1.Focus();
+            }
+        }
+
         private void resultsTabControl_DoubleClick(object sender, EventArgs e)
         {
             object o = textEditorControl1.Document.UndoStack.UndoItemCount;
         }
 
-        int _resultsCount;
-        void CreateGridTab()
+        int _resultsCount = -1;
+        TabPage CreateGridTab()
         {
-            TabPage page = new TabPage("Resultset " + _resultsCount + 1);
+            TabPage page = new TabPage("Resultset " + (_resultsCount + 1));
             TabControl dataAndSchema = new TabControl();
             dataAndSchema.Selected += new TabControlEventHandler(dataAndSchema_Selected);
             dataAndSchema.Dock = DockStyle.Fill;
@@ -247,6 +278,8 @@ namespace App
             TabPage schema = new TabPage("Schema");
             schema.Name = "schemaTabPage";
             DataGridView schgrid = new DataGridView();
+            schgrid.RowHeadersWidth = 15;
+            schgrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             schgrid.Dock = DockStyle.Fill;
             schema.Controls.Add(schgrid);
             dataAndSchema.TabPages.Add(data);
@@ -254,6 +287,7 @@ namespace App
             page.Controls.Add(dataAndSchema);
             resultsTabControl.TabPages.Add(page);
             dataAndSchema.SelectedTab = data;
+            return page;
         }
 
         void dataAndSchema_Selected(object sender, TabControlEventArgs e)
@@ -308,22 +342,24 @@ namespace App
 
         void _execController_ExecuteAsyncNewResult(StatementExecutionController.ExecuteNewResultEventArgs e)
         {
-            CreateGridTab();
+            _resultsCount++;
+            TabPage tab = CreateGridTab();
             if (timerRowCount.Enabled == false)
                 timerRowCount.Enabled = true;
 
-            PagedGridView grid = GetDataGrid(resultsTabControl.SelectedTab);
+            PagedGridView grid = GetDataGrid(tab);
             DataGridViewColumn col;
             foreach (DataRow schemarow in e.Schema.Rows)
             {
                 col = new DataGridViewTextBoxColumn();
                 col.Name = (string)schemarow["ColumnName"]+"column";
+                col.HeaderText = (string)schemarow["ColumnName"];
                 col.DataPropertyName = (string)schemarow["ColumnName"];
                 col.ReadOnly = (bool)schemarow["IsReadOnly"];
                 grid.Columns.Add(col);
             }
 
-            DataGridView schgrid = GetSchemaGrid(resultsTabControl.SelectedTab);
+            DataGridView schgrid = GetSchemaGrid(tab);
             schgrid.DataSource = e.Schema;
 
             grid.PagedDataSource = e.Data;

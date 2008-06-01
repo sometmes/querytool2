@@ -55,13 +55,18 @@ namespace App
             {
                 this.AcceptButton = newConn;
                 lastConn.Enabled = false;
+                RecentScroll.Maximum = 10;
+                RecentScroll.Minimum = 0;
+                RecentScroll.Enabled = false;
+                recentConnString.Text = "";
             }
             else
             {
                 this.AcceptButton = lastConn;
                 newConn.Enabled = false;
 
-                RecentScroll.Maximum = _cl.Connections.Count-1;
+                RecentScroll.Enabled = true;
+                RecentScroll.Maximum = _cl.Connections.Count - 1;
                 RecentScroll.Minimum = 0;
                 RecentScroll_ValueChanged(null, null);
             }
