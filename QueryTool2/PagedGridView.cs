@@ -19,14 +19,61 @@ namespace App
         public delegate void PageNeededDelegate(int rowIndex, int pageSize);
         public event PageNeededDelegate PageNeeded;
 
-        DataSet _changes = new DataSet();
-
         public PagedGridView()
         {
             VirtualMode = true;
             PageSize = 100;
-            RowHeadersWidth = 15;
             RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            NewRowNeeded += new DataGridViewRowEventHandler(PagedGridView_NewRowNeeded);
+            CellValuePushed += new DataGridViewCellValueEventHandler(PagedGridView_CellValuePushed);
+            CancelRowEdit += new QuestionEventHandler(PagedGridView_CancelRowEdit);
+            RowLeave += new DataGridViewCellEventHandler(PagedGridView_RowLeave);
+            RowValidating += new DataGridViewCellCancelEventHandler(PagedGridView_RowValidating);
+        }
+
+        void PagedGridView_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (this.IsCurrentRowDirty)
+            {
+                try
+                {
+                    _pagingBindingSource.EndEdit();
+                }
+                catch (Exception ex)
+                {
+                    //CurrentRow.HeaderCell.ErrorText
+                    CurrentRow.ErrorText = ex.GetBaseException().Message;
+                    //e.Cancel = true;
+                }
+            }
+            else
+                _pagingBindingSource.CancelEdit();
+        }
+
+        void PagedGridView_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        void PagedGridView_CancelRowEdit(object sender, QuestionEventArgs e)
+        {
+            _pagingBindingSource.CancelEdit();
+        }
+
+        void PagedGridView_CellValuePushed(object sender, DataGridViewCellValueEventArgs e)
+        {
+            try
+            {
+                _bindingSourceCols[e.ColumnIndex].SetValue(_pagingBindingSource[e.RowIndex], e.Value);
+            }
+            catch (Exception ex)
+            {
+                CurrentCell.ErrorText = ex.GetBaseException().Message;
+            }
+        }
+
+        void PagedGridView_NewRowNeeded(object sender, DataGridViewRowEventArgs e)
+        {
+            _pagingBindingSource.AddNew();
         }
 
         public int PageSize

@@ -51,8 +51,8 @@ namespace App
             _execController.ExecuteAsyncRowFetchComplete += new StatementExecutionController.ExecuteAsyncRowFetchCompleteDelegate(_execController_ExecuteAsyncRowFetchComplete);
 
             textEditorControl1.Text = @"
---select * from AdventureWorks.Person.AddressType
-select * from AdventureWorks.Production.WorkOrder
+select * from AdventureWorks.Person.AddressType
+--select * from AdventureWorks.Production.WorkOrder
 ";
 
             CreateGridTab();
@@ -278,7 +278,6 @@ select * from AdventureWorks.Production.WorkOrder
             TabPage schema = new TabPage("Schema");
             schema.Name = "schemaTabPage";
             DataGridView schgrid = new DataGridView();
-            schgrid.RowHeadersWidth = 15;
             schgrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             schgrid.Dock = DockStyle.Fill;
             schema.Controls.Add(schgrid);
