@@ -273,6 +273,7 @@ select * from AdventureWorks.Person.AddressType
             data.Name = "dataTabPage";
             PagedGridView grid = new PagedGridView();
             grid.DoubleClick += new EventHandler(grid_DoubleClick);
+            grid.DisableConstraints += new PagedGridView.DisableConstraintsDelegate(grid_DisableConstraints);
             grid.Dock = DockStyle.Fill;
             data.Controls.Add(grid);
             TabPage schema = new TabPage("Schema");
@@ -287,6 +288,12 @@ select * from AdventureWorks.Person.AddressType
             resultsTabControl.TabPages.Add(page);
             dataAndSchema.SelectedTab = data;
             return page;
+        }
+
+        void grid_DisableConstraints(object dataSource)
+        {
+            DataTable t = dataSource as DataTable;
+            t.BeginLoadData();
         }
 
         void dataAndSchema_Selected(object sender, TabControlEventArgs e)

@@ -14,6 +14,20 @@ namespace QueryTool2
         [STAThread]
         static void Main()
         {
+            //System.Data.DataSet ds = new System.Data.DataSet();
+            //System.Data.DataTable t = ds.Tables.Add();
+            //t.Columns.Add("uno",typeof(int));
+            //t.Columns.Add("dos");
+            //ds.Tables[0].Rows.Add(1, "a");
+            //ds.Tables[0].Rows.Add(2, "b");
+            //ds.Tables[0].Rows.Add(3, "c");
+
+            //ds.Tables[0].Rows[0].BeginEdit();
+            //ds.Tables[0].Rows[0].
+            //ds.Tables[0].Rows[0][0] = "uno";
+            //ds.Tables[0].Rows[0].BeginEdit();
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //LoadHardCodedSettings();
