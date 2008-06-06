@@ -50,6 +50,11 @@ namespace App
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editingPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resultsPaneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.switchPaneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +64,8 @@ namespace App
             this.executeQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.executeAssistedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enforceConstraintsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,11 +90,6 @@ namespace App
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.copyFullPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editingPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resultsPaneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.switchPaneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -197,6 +199,7 @@ namespace App
             this.viewToolStripMenuItem,
             this.connectionToolStripMenuItem,
             this.databaseToolStripMenuItem,
+            this.resultsToolStripMenuItem,
             this.windowToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -221,7 +224,7 @@ namespace App
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.FileNewCommand);
             // 
@@ -229,7 +232,7 @@ namespace App
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.FileOpenCommand);
             // 
@@ -237,7 +240,7 @@ namespace App
             // 
             this.closeToolStripMenuItem2.Name = "closeToolStripMenuItem2";
             this.closeToolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.closeToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.closeToolStripMenuItem2.Size = new System.Drawing.Size(149, 22);
             this.closeToolStripMenuItem2.Text = "&Close";
             this.closeToolStripMenuItem2.Click += new System.EventHandler(this.CloseTabCommand);
             // 
@@ -245,18 +248,18 @@ namespace App
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.saveToolStripMenuItem1.Text = "&Save";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -280,6 +283,42 @@ namespace App
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.pasteToolStripMenuItem.Text = "&Paste";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editingPageToolStripMenuItem,
+            this.resultsPaneToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.switchPaneToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // editingPageToolStripMenuItem
+            // 
+            this.editingPageToolStripMenuItem.Name = "editingPageToolStripMenuItem";
+            this.editingPageToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.editingPageToolStripMenuItem.Text = "&Edit";
+            // 
+            // resultsPaneToolStripMenuItem
+            // 
+            this.resultsPaneToolStripMenuItem.Name = "resultsPaneToolStripMenuItem";
+            this.resultsPaneToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.resultsPaneToolStripMenuItem.Text = "&Results";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(154, 6);
+            // 
+            // switchPaneToolStripMenuItem
+            // 
+            this.switchPaneToolStripMenuItem.Name = "switchPaneToolStripMenuItem";
+            this.switchPaneToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            this.switchPaneToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.switchPaneToolStripMenuItem.Text = "&Switch pane";
+            this.switchPaneToolStripMenuItem.Click += new System.EventHandler(this.switchPaneToolStripMenuItem_Click);
             // 
             // connectionToolStripMenuItem
             // 
@@ -348,6 +387,23 @@ namespace App
             this.cancelToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.cancelToolStripMenuItem.Text = "Cancel";
             this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
+            // 
+            // resultsToolStripMenuItem
+            // 
+            this.resultsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enforceConstraintsToolStripMenuItem});
+            this.resultsToolStripMenuItem.Name = "resultsToolStripMenuItem";
+            this.resultsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.resultsToolStripMenuItem.Text = "&Results";
+            this.resultsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.resultsToolStripMenuItem_DropDownOpening);
+            // 
+            // enforceConstraintsToolStripMenuItem
+            // 
+            this.enforceConstraintsToolStripMenuItem.CheckOnClick = true;
+            this.enforceConstraintsToolStripMenuItem.Name = "enforceConstraintsToolStripMenuItem";
+            this.enforceConstraintsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.enforceConstraintsToolStripMenuItem.Text = "Enforce constraints";
+            this.enforceConstraintsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enforceConstraintsToolStripMenuItem_CheckedChanged);
             // 
             // windowToolStripMenuItem
             // 
@@ -555,42 +611,6 @@ namespace App
             this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing &Folder";
             // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editingPageToolStripMenuItem,
-            this.resultsPaneToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.switchPaneToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // editingPageToolStripMenuItem
-            // 
-            this.editingPageToolStripMenuItem.Name = "editingPageToolStripMenuItem";
-            this.editingPageToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.editingPageToolStripMenuItem.Text = "&Edit";
-            // 
-            // resultsPaneToolStripMenuItem
-            // 
-            this.resultsPaneToolStripMenuItem.Name = "resultsPaneToolStripMenuItem";
-            this.resultsPaneToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.resultsPaneToolStripMenuItem.Text = "&Results";
-            // 
-            // switchPaneToolStripMenuItem
-            // 
-            this.switchPaneToolStripMenuItem.Name = "switchPaneToolStripMenuItem";
-            this.switchPaneToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.switchPaneToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.switchPaneToolStripMenuItem.Text = "&Switch pane";
-            this.switchPaneToolStripMenuItem.Click += new System.EventHandler(this.switchPaneToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(154, 6);
-            // 
             // QueryWindowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -685,5 +705,7 @@ namespace App
         private System.Windows.Forms.ToolStripMenuItem resultsPaneToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem switchPaneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resultsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enforceConstraintsToolStripMenuItem;
     }
 }

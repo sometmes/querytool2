@@ -28,22 +28,35 @@ namespace App
             VirtualMode = true;
             PageSize = 100;
             RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            NewRowNeeded += new DataGridViewRowEventHandler(PagedGridView_NewRowNeeded);
-            CellValuePushed += new DataGridViewCellValueEventHandler(PagedGridView_CellValuePushed);
-            CancelRowEdit += new QuestionEventHandler(PagedGridView_CancelRowEdit);
-            RowLeave += new DataGridViewCellEventHandler(PagedGridView_RowLeave);
-            RowValidating += new DataGridViewCellCancelEventHandler(PagedGridView_RowValidating);
-            CellBeginEdit+=new DataGridViewCellCancelEventHandler(PagedGridView_CellBeginEdit);
         }
 
-        void  PagedGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e)
         {
- 	        if (!_uncommitedRows.ContainsKey(e.RowIndex))
-                _uncommitedRows.Add(e.RowIndex,object[] of values for the row);
+            base.OnRowsRemoved(e);
+            if (_pagingBindingSource.Count <= e.RowIndex) return;
+
+            for (int i = 0; i < e.RowCount; i++)
+                _pagingBindingSource.RemoveAt(e.RowIndex + i);
         }
 
-        void PagedGridView_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        object[] GetDataGridViewRowValues(DataGridViewRow row)
         {
+            object[] values = new object[row.Cells.Count];
+            foreach (DataGridViewCell cell in row.Cells)
+                values[cell.ColumnIndex] = cell.Value;
+            return values;
+        }
+
+        protected override void OnCellBeginEdit(DataGridViewCellCancelEventArgs e)
+        {
+            base.OnCellBeginEdit(e);
+            if (!_uncommitedRows.ContainsKey(e.RowIndex))
+                _uncommitedRows.Add(e.RowIndex, GetDataGridViewRowValues(this.CurrentRow));
+        }
+
+        protected override void OnRowValidating(DataGridViewCellCancelEventArgs e)
+        {
+            base.OnRowValidating(e);
             if (this.IsCurrentRowDirty)
             {
                 try
@@ -93,18 +106,16 @@ namespace App
                 _pagingBindingSource.CancelEdit();
         }
 
-        void PagedGridView_RowLeave(object sender, DataGridViewCellEventArgs e)
+        protected override void OnCancelRowEdit(QuestionEventArgs e)
         {
-        }
-
-        void PagedGridView_CancelRowEdit(object sender, QuestionEventArgs e)
-        {
+            base.OnCancelRowEdit(e);
             _pagingBindingSource.CancelEdit();
             _uncommitedRows.Remove(CurrentRow.Index);
         }
 
-        void PagedGridView_CellValuePushed(object sender, DataGridViewCellValueEventArgs e)
+        protected override void OnCellValuePushed(DataGridViewCellValueEventArgs e)
         {
+            base.OnCellValuePushed(e);
             try
             {
                 _uncommitedRows[e.RowIndex][e.ColumnIndex] = e.Value;
@@ -117,8 +128,9 @@ namespace App
             }
         }
 
-        void PagedGridView_NewRowNeeded(object sender, DataGridViewRowEventArgs e)
+        protected override void OnNewRowNeeded(DataGridViewRowEventArgs e)
         {
+            base.OnNewRowNeeded(e);
             Trace.TraceInformation("NewRowNeeded");
             _pagingBindingSource.AddNew();
         }

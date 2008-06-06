@@ -297,5 +297,26 @@ namespace App
             cont.SwitchPane();
         }
 
+        object _noevent = new object();
+
+        private void resultsToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            enforceConstraintsToolStripMenuItem.Tag = _noevent;
+            enforceConstraintsToolStripMenuItem.Checked = true;
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            enforceConstraintsToolStripMenuItem.Checked = cont.EnforceConstraints;
+            enforceConstraintsToolStripMenuItem.Tag = null;
+        }
+
+        private void enforceConstraintsToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (enforceConstraintsToolStripMenuItem.Tag == _noevent) return;
+            EditingTabController cont = _editingTabList[filesTabControl.SelectedTab];
+            if (cont.EnforceConstraints)
+                cont.DisableConstraints();
+            else
+                cont.EnableConstraints();
+        }
+
     }
 }

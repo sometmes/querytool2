@@ -293,7 +293,28 @@ select * from AdventureWorks.Person.AddressType
         void grid_DisableConstraints(object dataSource)
         {
             DataTable t = dataSource as DataTable;
-            t.BeginLoadData();
+            t.DataSet.EnforceConstraints = false;
+        }
+
+        public void DisableConstraints()
+        {
+            DataTable t = VisibleDataTable;
+            if (t == null) return;
+            grid_DisableConstraints(VisibleDataTable);
+        }
+
+        public void EnableConstraints()
+        {
+            DataTable t = VisibleDataTable;
+            if (t == null) return;
+            try
+            {
+                t.DataSet.EnforceConstraints = true;
+            }
+            catch (ConstraintException ex)
+            {
+                MessageBox.Show(ex.GetBaseException().Message);
+            }
         }
 
         void dataAndSchema_Selected(object sender, TabControlEventArgs e)
@@ -309,6 +330,16 @@ select * from AdventureWorks.Person.AddressType
         void grid_DoubleClick(object sender, EventArgs e)
         {
             MessageBox.Show((sender as DataGridView).FirstDisplayedScrollingRowIndex.ToString());
+        }
+
+        public bool EnforceConstraints
+        {
+            get
+            {
+                DataTable t = VisibleDataTable;
+                if (t == null) return true;
+                return t.DataSet.EnforceConstraints;
+            }
         }
 
         PagedGridView GetDataGrid(TabPage gridTab)
