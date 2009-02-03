@@ -5,3 +5,5 @@ For example
 
 Conexió de prova:
 	Data Source=(local);Initial Catalog=AdventureWorks;Integrated Security=True
+
+X
